@@ -1,4 +1,4 @@
-package GestioneBus-Team6;
+-Team6;
 
 public class Application {
 
