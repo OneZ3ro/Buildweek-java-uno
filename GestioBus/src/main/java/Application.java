@@ -1,4 +1,3 @@
--Team6;
 
 public class Application {
 
