@@ -1,5 +1,5 @@
 package entities.enums;
 
-public enum TypeVehicle {
+public enum TipoDiMezzo {
     AUTOBUS, TRAM
 }
