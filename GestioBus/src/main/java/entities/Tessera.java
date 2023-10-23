@@ -3,14 +3,12 @@ package entities;
 import entities.DocumentoVendita;
 import entities.enums.TipoAbbonamento;
 
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
+@Entity
 public class Tessera extends DocumentoVendita {
     @OneToOne
     @JoinColumn(name = "utente_id")
@@ -23,8 +21,8 @@ public class Tessera extends DocumentoVendita {
 
     public Tessera(){}
 
-    public Tessera(UUID documentoVenditaId, LocalDate dataDiRilascio, List<PuntoVendita> listaPuntiVendita, Utente utente, TipoAbbonamento tipoAbbonamento, LocalDate dataDiEmissione, boolean active) {
-        super(documentoVenditaId, dataDiRilascio, listaPuntiVendita);
+    public Tessera(UUID documentoVenditaId, LocalDate dataDiRilascio, Utente utente, TipoAbbonamento tipoAbbonamento, LocalDate dataDiEmissione, boolean active) {
+        super(documentoVenditaId, dataDiRilascio);
         this.utente = utente;
         this.tipoAbbonamento = tipoAbbonamento;
         this.dataDiScadenza = dataDiEmissione.plusYears(1);

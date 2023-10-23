@@ -1,5 +1,7 @@
 package entities;
 
+import entities.enums.TipoDiMezzo;
+
 import javax.persistence.*;
 import java.util.UUID;
 
@@ -10,8 +12,7 @@ public class MezzoDiTrasporto {
     @Column(name = "mezzo_di_trasporto_id")
     private UUID mezzoDiTrasportoId;
     @Enumerated(EnumType.STRING)
-
-    private MezzoDiTrasporto mezzoDiTrasporto;
+    private TipoDiMezzo tipoDiMezzo;
     private long capienza;
     @ManyToOne
     @JoinColumn(name = "tratta_id")
@@ -19,18 +20,18 @@ public class MezzoDiTrasporto {
 
     public MezzoDiTrasporto(){}
 
-    public MezzoDiTrasporto(MezzoDiTrasporto mezzoDiTrasporto, long capienza, Tratta tratta) {
-        this.mezzoDiTrasporto = mezzoDiTrasporto;
+    public MezzoDiTrasporto(TipoDiMezzo tipoDiMezzo, long capienza, Tratta tratta) {
+        this.tipoDiMezzo = tipoDiMezzo;
         this.capienza = capienza;
         this.tratta = tratta;
     }
 
-    public MezzoDiTrasporto getMezzoDiTrasporto() {
-        return mezzoDiTrasporto;
+    public TipoDiMezzo getTipoDiMezzo() {
+        return tipoDiMezzo;
     }
 
-    public void setMezzoDiTrasporto(MezzoDiTrasporto mezzoDiTrasporto) {
-        this.mezzoDiTrasporto = mezzoDiTrasporto;
+    public void setTipoDiMezzo(TipoDiMezzo tipoDiMezzo) {
+        this.tipoDiMezzo = tipoDiMezzo;
     }
 
     public long getCapienza() {
@@ -57,7 +58,7 @@ public class MezzoDiTrasporto {
     public String toString() {
         return "MezzoDiTrasporto{" +
                 "mezzoDiTrasportoId=" + mezzoDiTrasportoId +
-                ", mezzoDiTrasporto=" + mezzoDiTrasporto +
+                ", mezzoDiTrasporto=" + tipoDiMezzo +
                 ", capienza=" + capienza +
                 ", tratta=" + tratta +
                 '}';
