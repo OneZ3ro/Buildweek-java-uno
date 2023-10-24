@@ -179,7 +179,7 @@ public class Application {
     }
 
     public static void creazioneUtente(UtenteDAO ud, Faker faker, Random rndm) {
-        for (int i = 0; i < rndm.nextInt(50, 101); i++) {
+        for (int i = 0; i < 50; i++) {
             Utente utente = new Utente(faker.funnyName().name(), faker.funnyName().name(),
                     LocalDate.parse(creaRandomData()));
             ud.save(utente);
@@ -187,14 +187,14 @@ public class Application {
     }
 
     public static void creazioneTratta(TrattaDAO td, Faker faker, Random rndm) {
-        for (int i = 0; i < rndm.nextInt(50, 101); i++) {
+        for (int i = 0; i < 50; i++) {
             Tratta tratta = new Tratta(faker.country().capital(), faker.country().capital());
             td.save(tratta);
         }
     }
 
     public static void creazioneMezzoDiTrasporto(MezzoTraspDAO mzd, TrattaDAO td, Random rndm) {
-        for (int i = 0; i < rndm.nextInt(50, 101); i++) {
+        for (int i = 0; i < 50; i++) {
             int n = rndm.nextInt(0, 1001);
             if (n % 2 == 0) {
                 MezzoDiTrasporto mezzoDiTrasporto = new MezzoDiTrasporto(TipoDiMezzo.AUTOBUS, rndm.nextLong(40, 101),
@@ -211,7 +211,7 @@ public class Application {
     }
 
     public static void creazionePuntoVedita(PuntoVenditaDAO pd, Faker faker, Random rndm) {
-        for (int i = 0; i < rndm.nextInt(50, 101); i++) {
+        for (int i = 0; i < 50; i++) {
             int n = rndm.nextInt(0, 1001);
             if (n % 2 == 0) {
                 PuntoVendita puntoVendita = new Distributore(faker.gameOfThrones().character(), faker.country().capital(), n % 3 == 0 ? StatoDistributore.ATTIVO : StatoDistributore.FUORI_SERVIZIO);
@@ -225,8 +225,7 @@ public class Application {
     }
 
     public static void creazioneDocumentoVendita(DocumentoVenditaDAO dd, UtenteDAO ud, MezzoTraspDAO mzd, Random rndm) {
-
-        for (int i = 0; i < rndm.nextInt(50, 101); i++) {
+        for (int i = 0; i < 50; i++) {
             int n = rndm.nextInt(0, 1001);
             LocalDate dataDiRilascio = LocalDate.parse(creaRandomData());
             if (n % 2 == 0) {
@@ -236,7 +235,7 @@ public class Application {
                 dd.save(documentoVendita);
             } else {
                 DocumentoVendita documentoVendita = new Tessera(dataDiRilascio,
-                        ud.getAllUtenti().get(rndm.nextInt(0, ud.getAllUtenti().size())),
+                        ud.getAllUtenti().get(i),
                         n % 3 == 0 ? TipoAbbonamento.MENSILE : TipoAbbonamento.SETTIMANALE, dataDiRilascio, n % 5 == 0);
                 dd.save(documentoVendita);
             }
