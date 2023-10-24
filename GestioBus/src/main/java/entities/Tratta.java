@@ -2,6 +2,7 @@ package entities;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 @Entity
@@ -15,8 +16,11 @@ public class Tratta {
 
     @OneToMany(mappedBy = "tratta")
     private List<MezzoDiTrasporto> trasporti;
+    @OneToMany(mappedBy = "tratta")
+    private Set<ControlloTratta> checks;
 
-    public Tratta(){}
+    public Tratta() {
+    }
 
     public Tratta(String partenza, String destinazione) {
         this.partenza = partenza;

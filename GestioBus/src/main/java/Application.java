@@ -11,6 +11,8 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import java.time.LocalDate;
 import java.util.*;
+import java.time.LocalDateTime;
+
 
 public class Application {
     private static final EntityManagerFactory emf = Persistence.createEntityManagerFactory("connections");
@@ -26,14 +28,22 @@ public class Application {
         UtenteDAO ud = new UtenteDAO(em);
         Faker faker = new Faker(new Locale("ITALY"));
         Random rndm = new Random();
-
-        creazioneUtente(ud, faker, rndm);
-        creazioneTratta(td, faker, rndm);
+/*
+        //creazioneUtente(ud, faker, rndm);
+        //creazioneTratta(td, faker, rndm);
         creazioneMezzoDiTrasporto(mzd, td, rndm);
         creazionePuntoVedita(pd, faker, rndm);
         creazioneDocumentoVendita(dd, ud, mzd, rndm); //nella parte di creazione
         //della tessera che cos'è dataDiEmissione e cosa cambia con dataDiRilascio
         creazioneManutenzione(mtd, mzd, rndm);
+
+
+ */
+        LocalDateTime t = LocalDateTime.now();
+
+        String s = t.getHour() + ":" + t.getMinute();
+        System.out.println(s);
+
 
         try {
             while (b) {
@@ -220,8 +230,9 @@ public class Application {
                 pd.save(puntoVendita);
             }
         }
-    }
 
+
+    
     public static void creazioneDocumentoVendita(DocumentoVenditaDAO dd, UtenteDAO ud, MezzoTraspDAO mzd, Random rndm) {
         for (int i = 0; i < 50; i++) {
             int n = rndm.nextInt(0, 1001);

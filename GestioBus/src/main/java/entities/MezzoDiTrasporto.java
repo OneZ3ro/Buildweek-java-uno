@@ -5,6 +5,7 @@ import enums.TipoDiMezzo;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 @Entity
@@ -24,6 +25,8 @@ public class MezzoDiTrasporto {
 
     @OneToMany(mappedBy = "mezzoDiTrasporto")
     private List<Manutenzione> manutenzioni;
+    @OneToMany(mappedBy = "mezzoDiTrasporto")
+    private Set<ControlloTratta> checks;
 
     public MezzoDiTrasporto() {
     }
