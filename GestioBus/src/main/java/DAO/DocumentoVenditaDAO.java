@@ -1,14 +1,19 @@
 package DAO;
 
 
+import entities.Biglietto;
 import entities.DocumentoVendita;
+import entities.PuntoVendita;
+import entities.Tessera;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 public class DocumentoVenditaDAO {
@@ -63,10 +68,32 @@ public class DocumentoVenditaDAO {
                             "WHERE biglietto.documentoVenditaId = :id");
             query.setParameter(":id", id);
             int updateCount = query.executeUpdate();
+            System.out.println("Convalidazine avvenuta con successo");
         }catch (Exception e){
             System.out.println("Oops c'è statoo un'errore nella convalidazione...");
             System.out.println(e.getMessage());
         }
+    }
+
+    public List<Tessera> dammiTesserePerData(LocalDate data){
+        TypedQuery<Tessera> query = em.createQuery("SELECT ts FROM Tessera ts " +
+                "WHERE ts.dataDiRilascio = :data", Tessera.class);
+        query.setParameter("data", data);
+        return query.getResultList();
+
+    }
+    public List<Biglietto> dammiBigliettiPerData(PuntoVendita puntoV, LocalDate data){
+        TypedQuery<Biglietto> query = em.createQuery("SELECT bl FROM Tessera bl " +
+                "WHERE bl.dataDiRilascio = :data", Biglietto.class);
+        query.setParameter("data", data);
+        return query.getResultList();
+
+    }public List<Tessera> dammiTesserePuntoEmissione(PuntoVendita puntoV, LocalDate data){
+        TypedQuery<Tessera> query = em.createQuery("SELECT ts FROM Tessera ts " +
+                "WHERE ts.dataDiRilascio = :data", Tessera.class);
+        query.setParameter("data", data);
+        return query.getResultList();
+
     }
 
     public void save(DocumentoVendita dv) {

@@ -21,8 +21,6 @@ public abstract class DocumentoVendita {
     public DocumentoVendita() {
     }
 
-    ;
-
     public DocumentoVendita(LocalDate dataDiRilascio) {
         this.dataDiRilascio = dataDiRilascio;
     }

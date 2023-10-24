@@ -28,13 +28,13 @@ public class Application {
         Faker faker = new Faker(new Locale("ITALY"));
         Random rndm = new Random();
 
-        creazioneUtente(ud, faker, rndm);
-        creazioneTratta(td, faker, rndm);
-        creazioneMezzoDiTrasporto(mzd, td, rndm);
-        creazionePuntoVedita(pd, faker, rndm);
-        creazioneDocumentoVendita(dd, ud, mzd, rndm); //nella parte di creazione
+//        creazioneUtente(ud, faker, rndm);
+//        creazioneTratta(td, faker, rndm);
+//        creazioneMezzoDiTrasporto(mzd, td, rndm);
+//        creazionePuntoVedita(pd, faker, rndm);
+//        creazioneDocumentoVendita(dd, ud, mzd, rndm); //nella parte di creazione
         //della tessera che cos'è dataDiEmissione e cosa cambia con dataDiRilascio
-        creazioneManutenzione(mtd, mzd, rndm);
+//        creazioneManutenzione(mtd, mzd, rndm);
 
         try {
             while (b) {
