@@ -5,9 +5,14 @@ import entities.DocumentoVendita;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
+import javax.persistence.Query;
+import javax.persistence.TypedQuery;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.UUID;
 
 public class DocumentoVenditaDAO {
+
     private final EntityManager em;
 
     public DocumentoVenditaDAO(EntityManager em) {
@@ -17,6 +22,38 @@ public class DocumentoVenditaDAO {
 
     public DocumentoVendita getById(UUID id) {
         return em.find(DocumentoVendita.class, id);
+    }
+
+    public void controlloAbbonamento(UUID id) {
+        try {
+            TypedQuery<DocumentoVendita> query = em.createQuery("SELECT ts FROM Tessera ts WHERE ts.documentoVenditaId = :idTessera", DocumentoVendita.class);
+            Query query2 = em.createQuery("SELECT ts.dataDiScadenza FROM Tessera ts WHERE ts.documentoVenditaId = :idTessera", DocumentoVendita.class);
+
+
+            query.setParameter("idTessera", id);
+            query2.setParameter("idTessera", id);
+            Object result = query.getSingleResult();
+            SimpleDateFormat sdformat = new SimpleDateFormat("yyyy-MM-dd");
+
+            if (result == null) {
+                System.out.println("Non è stato possibile trovare il Documento con N:" + " " + id + "!!");
+            } else {
+                String result2 = (String) query2.getSingleResult();
+
+                Date todayDate = sdformat.parse(sdformat.format(new Date()));
+                Date d1 = sdformat.parse(result2);
+                if (d1.compareTo(todayDate) > 0) {
+                    System.out.println("La tessera N:" + " " + id + " " + "è scaduta il:" + " " + d1);
+                } else {
+                    System.out.println("Tessera ancora in corso di valisità, scade il:" + " " + d1);
+                }
+
+            }
+        } catch (Exception e) {
+            System.out.println("Errore nel caricamento dati: " + e.getMessage());
+        }
+
+
     }
 
     public void save(DocumentoVendita dv) {
