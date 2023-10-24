@@ -1,11 +1,9 @@
 package entities;
 
-import entities.DocumentoVendita;
-import entities.enums.TipoAbbonamento;
+import enums.TipoAbbonamento;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.List;
 import java.util.UUID;
 
 @Entity

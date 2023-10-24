@@ -1,6 +1,6 @@
 package entities;
 
-import entities.enums.TipoDiMezzo;
+import enums.TipoDiMezzo;
 
 import javax.persistence.*;
 import java.util.UUID;
