@@ -19,8 +19,8 @@ public class Tessera extends DocumentoVendita {
 
     public Tessera(){}
 
-    public Tessera(UUID documentoVenditaId, LocalDate dataDiRilascio, Utente utente, TipoAbbonamento tipoAbbonamento, LocalDate dataDiEmissione, boolean active) {
-        super(documentoVenditaId, dataDiRilascio);
+    public Tessera(LocalDate dataDiRilascio, Utente utente, TipoAbbonamento tipoAbbonamento, LocalDate dataDiEmissione, boolean active) {
+        super(dataDiRilascio);
         this.utente = utente;
         this.tipoAbbonamento = tipoAbbonamento;
         this.dataDiScadenza = dataDiEmissione.plusYears(1);

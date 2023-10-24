@@ -19,8 +19,7 @@ public abstract class DocumentoVendita {
     private List<PuntoVendita> listaPuntiVendita;
 
     public DocumentoVendita(){};
-    public DocumentoVendita(UUID documentoVenditaId, LocalDate dataDiRilascio) {
-        this.documentoVenditaId = documentoVenditaId;
+    public DocumentoVendita(LocalDate dataDiRilascio) {
         this.dataDiRilascio = dataDiRilascio;
     }
 

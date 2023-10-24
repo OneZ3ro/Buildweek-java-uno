@@ -4,6 +4,8 @@ import entities.Tratta;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
+import javax.persistence.TypedQuery;
+import java.util.List;
 import java.util.UUID;
 
 public class TrattaDAO {
@@ -48,5 +50,10 @@ public class TrattaDAO {
         } else {
             System.err.println("La tratta con id" + id + " non è stata trovata");
         }
+    }
+
+    public List<Tratta> getAllTratte(){
+        TypedQuery<Tratta> getAllTratteQuery = em.createQuery("SELECT t FROM Tratta t", Tratta.class);
+        return getAllTratteQuery.getResultList();
     }
 }

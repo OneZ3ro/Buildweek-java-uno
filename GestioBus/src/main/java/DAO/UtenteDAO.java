@@ -1,9 +1,12 @@
 package DAO;
 
+import entities.Tratta;
 import entities.Utente;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
+import javax.persistence.TypedQuery;
+import java.util.List;
 import java.util.UUID;
 
 public class UtenteDAO {
@@ -48,5 +51,10 @@ public class UtenteDAO {
         } else {
             System.err.println("L'utente con id" + id + " non è stato trovato");
         }
+    }
+
+    public List<Utente> getAllUtenti(){
+        TypedQuery<Utente> getAllUtentiQuery = em.createQuery("SELECT u FROM Utente u", Utente.class);
+        return getAllUtentiQuery.getResultList();
     }
 }
