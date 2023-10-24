@@ -56,6 +56,19 @@ public class DocumentoVenditaDAO {
 
     }
 
+    public void convalidaBiglietto(UUID id){
+        try {
+            Query query = em.createQuery(
+                    "UPDATE biglietto SET biglietto.dataDiConvalidazione = CURRENT_DATE " +
+                            "WHERE biglietto.documentoVenditaId = :id");
+            query.setParameter(":id", id);
+            int updateCount = query.executeUpdate();
+        }catch (Exception e){
+            System.out.println("Oops c'è statoo un'errore nella convalidazione...");
+            System.out.println(e.getMessage());
+        }
+    }
+
     public void save(DocumentoVendita dv) {
         EntityTransaction transaction = em.getTransaction();
         try {
