@@ -2,6 +2,7 @@ import DAO.*;
 import com.github.javafaker.Faker;
 import entities.*;
 import enums.Stato;
+import enums.StatoDistributore;
 import enums.TipoAbbonamento;
 import enums.TipoDiMezzo;
 
@@ -9,9 +10,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import java.time.LocalDate;
-import java.util.Locale;
-import java.util.Random;
-import java.util.Scanner;
+import java.util.*;
 
 public class Application {
     private static final EntityManagerFactory emf = Persistence.createEntityManagerFactory("connections");
@@ -213,8 +212,7 @@ public class Application {
         for (int i = 0; i < rndm.nextInt(50, 101); i++) {
             int n = rndm.nextInt(0, 1001);
             if (n % 2 == 0) {
-                PuntoVendita puntoVendita = new Distributore(faker.gameOfThrones().character(),
-                        faker.country().capital());
+                PuntoVendita puntoVendita = new Distributore(faker.gameOfThrones().character(), faker.country().capital(), n%3==0 ? StatoDistributore.ATTIVO : StatoDistributore.FUORI_SERVIZIO);
                 pd.save(puntoVendita);
             } else {
                 PuntoVendita puntoVendita = new Rivenditore(faker.gameOfThrones().character(),
@@ -244,10 +242,10 @@ public class Application {
     }
 
     public static void creazioneManutenzione(ManutenzioneDAO mtd, MezzoTraspDAO mzd, Random rndm) {
+        String[] app = {"Cambio vetri", "Riparazione freni", "Cambio olio"};
         for (int i = 0; i < rndm.nextInt(50, 101); i++) {
             LocalDate dataInizio = LocalDate.parse(creaRandomData());
-            Manutenzione manutenzione = new Manutenzione(dataInizio, dataInizio.plusDays(rndm.nextInt(3, 201)),
-                    mzd.getAllMezziDiTrasporti().get(rndm.nextInt(0, mzd.getAllMezziDiTrasporti().size())));
+            Manutenzione manutenzione = new Manutenzione(dataInizio, dataInizio.plusDays(rndm.nextInt(3, 201)), mzd.getAllMezziDiTrasporti().get(rndm.nextInt(0, mzd.getAllMezziDiTrasporti().size())), app[rndm.nextInt(0, app.length)]);
             mtd.save(manutenzione);
         }
     }

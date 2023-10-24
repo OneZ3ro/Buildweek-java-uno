@@ -19,10 +19,11 @@ public class Manutenzione {
     public Manutenzione() {
     }
 
-    public Manutenzione(LocalDate dataInizio, LocalDate dataFine, MezzoDiTrasporto mezzoDiTrasporto) {
+    public Manutenzione(LocalDate dataInizio, LocalDate dataFine, MezzoDiTrasporto mezzoDiTrasporto, String descrizione) {
         this.dataInizio = dataInizio;
         this.dataFine = dataFine;
         this.mezzoDiTrasporto = mezzoDiTrasporto;
+        this.descrizione = descrizione;
     }
 
     public LocalDate getDataInizio() {
@@ -49,6 +50,14 @@ public class Manutenzione {
         return mezzoDiTrasporto;
     }
 
+    public String getDescrizione() {
+        return descrizione;
+    }
+
+    public void setDescrizione(String descrizione) {
+        this.descrizione = descrizione;
+    }
+
     @Override
     public String toString() {
         return "Manutenzione{" +
@@ -56,6 +65,7 @@ public class Manutenzione {
                 ", dataInizio=" + dataInizio +
                 ", dataFine=" + dataFine +
                 ", mezzoDiTrasporto=" + mezzoDiTrasporto +
+                ", descrizione='" + descrizione + '\'' +
                 '}';
     }
 }
