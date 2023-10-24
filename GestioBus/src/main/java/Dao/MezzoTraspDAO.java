@@ -6,6 +6,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.TypedQuery;
 import java.util.List;
+import java.util.Objects;
+import java.util.UUID;
 
 public class MezzoTraspDAO {
 
@@ -16,16 +18,22 @@ public class MezzoTraspDAO {
   }
 
 
-//  public  getTransportStatusById(int year) {
-//    try {
-//      TypedQuery<LibraryProduct> getResultQuery = em.createQuery("SELECT lp FROM LibraryProduct lp WHERE EXTRACT(YEAR FROM lp.publicationYear) = :year", LibraryProduct.class);
-//      getResultQuery.setParameter("year", year);
-//      return getResultQuery.getResultList();
-//    } catch (Exception e) {
-//      System.out.println("There was an error loading data");
-//      throw e;
-//    }
-//  }
+  public  void getTransportStatusById(UUID idMezzo) {
+    try {
+      TypedQuery<MezzoDiTrasporto> getResultQuery = em.createQuery("SELECT mt.stato FROM MezzoDiTrasporto mt WHERE mt.mezzoDiTrasportoId = :idMezzo", MezzoDiTrasporto.class);
+      getResultQuery.setParameter("idMezzo", idMezzo);
+      Object result = getResultQuery.getSingleResult();
+      if (result == null) {
+        System.out.println("Ci dispiace l'id inserito è errato");
+      } else {
+        System.out.println(result);
+      }
+
+    } catch (Exception e) {
+      System.out.println("There was an error loading data");
+      throw e;
+    }
+  }
 
   public void save(MezzoDiTrasporto MezzoDiTrasporto) {
       EntityTransaction trc = em.getTransaction();
