@@ -58,7 +58,7 @@ public class MezzoTraspDAO {
     }
 
     public void MezzoDiTrasportoRefresh(MezzoDiTrasporto MezzoDiTrasporto) {
-      em.refresh(entities.MezzoDiTrasporto);
+      em.refresh(MezzoDiTrasporto);
     }
   }
 
