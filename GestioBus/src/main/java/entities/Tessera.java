@@ -14,18 +14,17 @@ public class Tessera extends DocumentoVendita {
     @Enumerated(EnumType.STRING)
     private TipoAbbonamento tipoAbbonamento;
     private LocalDate dataDiScadenza;
-    private LocalDate dataDiEmissione;
+    private LocalDate dataDiRinnovo;
     private boolean active;
 
     public Tessera(){}
 
-    public Tessera(LocalDate dataDiRilascio, Utente utente, TipoAbbonamento tipoAbbonamento, LocalDate dataDiEmissione, boolean active) {
+    public Tessera(LocalDate dataDiRilascio, Utente utente, TipoAbbonamento tipoAbbonamento, LocalDate dataDiRinnovo) {
         super(dataDiRilascio);
         this.utente = utente;
         this.tipoAbbonamento = tipoAbbonamento;
-        this.dataDiScadenza = dataDiEmissione.plusYears(1);
-        this.dataDiEmissione = dataDiEmissione;
-        this.active = active;
+        this.dataDiScadenza = dataDiRinnovo.plusYears(1);
+        this.dataDiRinnovo = dataDiRinnovo;
     }
 
     public TipoAbbonamento getTipoAbbonamento() {
@@ -44,12 +43,12 @@ public class Tessera extends DocumentoVendita {
         this.dataDiScadenza = dataDiScadenza;
     }
 
-    public LocalDate getDataDiEmissione() {
-        return dataDiEmissione;
+    public LocalDate getDataDiRinnovo() {
+        return dataDiRinnovo;
     }
 
-    public void setDataDiEmissione(LocalDate dataDiEmissione) {
-        this.dataDiEmissione = dataDiEmissione;
+    public void setDataDiRinnovo(LocalDate dataDiRinnovo) {
+        this.dataDiRinnovo = dataDiRinnovo;
     }
 
     public boolean isActive() {
@@ -70,7 +69,7 @@ public class Tessera extends DocumentoVendita {
                 "utente=" + utente +
                 ", tipoAbbonamento=" + tipoAbbonamento +
                 ", dataDiScadenza=" + dataDiScadenza +
-                ", dataDiEmissione=" + dataDiEmissione +
+                ", dataDiRinnovo=" + dataDiRinnovo +
                 ", active=" + active +
                 '}';
     }
