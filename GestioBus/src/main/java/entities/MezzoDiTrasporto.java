@@ -16,6 +16,7 @@ public class MezzoDiTrasporto {
     @Enumerated(EnumType.STRING)
     private TipoDiMezzo tipoDiMezzo;
     private long capienza;
+    @Enumerated(EnumType.STRING)
     private Stato stato;
     @ManyToOne
     @JoinColumn(name = "tratta_id")
@@ -24,7 +25,8 @@ public class MezzoDiTrasporto {
     @OneToMany(mappedBy = "mezzoDiTrasporto")
     private List<Manutenzione> manutenzioni;
 
-    public MezzoDiTrasporto(){}
+    public MezzoDiTrasporto() {
+    }
 
     public MezzoDiTrasporto(TipoDiMezzo tipoDiMezzo, long capienza, Tratta tratta, Stato stato) {
         this.tipoDiMezzo = tipoDiMezzo;

@@ -17,7 +17,8 @@ public abstract class PuntoVendita {
     @JoinTable(name = "puntovendita_documentovendita", joinColumns = @JoinColumn(name = "punto_vendita_id"), inverseJoinColumns = @JoinColumn(name = "documento_vendita_id"))
     private List<DocumentoVendita> documentoVendite;
 
-    public PuntoVendita(){}
+    public PuntoVendita() {
+    }
 
     public PuntoVendita(String nome, String citta) {
         this.nome = nome;
