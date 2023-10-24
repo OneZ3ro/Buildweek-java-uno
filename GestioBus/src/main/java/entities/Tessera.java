@@ -4,7 +4,6 @@ import enums.TipoAbbonamento;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.UUID;
 
 @Entity
 public class Tessera extends DocumentoVendita {
@@ -17,7 +16,8 @@ public class Tessera extends DocumentoVendita {
     private LocalDate dataDiEmissione;
     private boolean active;
 
-    public Tessera(){}
+    public Tessera() {
+    }
 
     public Tessera(LocalDate dataDiRilascio, Utente utente, TipoAbbonamento tipoAbbonamento, LocalDate dataDiEmissione, boolean active) {
         super(dataDiRilascio);
@@ -67,7 +67,7 @@ public class Tessera extends DocumentoVendita {
     @Override
     public String toString() {
         return "Tessera{" +
-                "utente=" + utente +
+                //"utente=" + utente +
                 ", tipoAbbonamento=" + tipoAbbonamento +
                 ", dataDiScadenza=" + dataDiScadenza +
                 ", dataDiEmissione=" + dataDiEmissione +

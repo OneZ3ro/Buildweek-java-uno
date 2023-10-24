@@ -51,8 +51,8 @@ public class DocumentoVenditaDAO {
             System.out.println("Errore nel caricamento dati: " + e.getMessage());
         }*/
         LocalDate oggi = LocalDate.now();
-        TypedQuery<DocumentoVendita> query = em.createQuery("SELECT ts FROM Tessera ts WHERE ts.dataDiScadenza > :oggi", DocumentoVendita.class);
-        query.setParameter("oggi", oggi);
+        TypedQuery<DocumentoVendita> query = em.createQuery("SELECT ts FROM Tessera ts WHERE ts.dataDiScadenza < CURRENT_DATE", DocumentoVendita.class);
+        //query.setParameter("oggi", oggi);
         query.getResultList().forEach(System.out::println);
     }
 
