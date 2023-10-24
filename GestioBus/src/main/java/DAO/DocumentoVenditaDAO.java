@@ -77,18 +77,20 @@ public class DocumentoVenditaDAO {
 
     public List<Tessera> dammiTesserePerData(LocalDate data){
         TypedQuery<Tessera> query = em.createQuery("SELECT ts FROM Tessera ts " +
-                "WHERE ts.dataDiRilascio = :data", Tessera.class);
-        query.setParameter("data", data);
+                "JOIN WHERE DocumentoVendita dv ON ts.DocumentoVendita = dv.DocumentoVendita WHERE dv.dataDiRilascio = :date", Tessera.class);
+        query.setParameter("date", data);
         return query.getResultList();
 
     }
-    public List<Biglietto> dammiBigliettiPerData(PuntoVendita puntoV, LocalDate data){
-        TypedQuery<Biglietto> query = em.createQuery("SELECT bl FROM Tessera bl " +
-                "WHERE bl.dataDiRilascio = :data", Biglietto.class);
-        query.setParameter("data", data);
+    public List<Biglietto> dammiBIgliettiPerData(LocalDate data){
+        TypedQuery<Biglietto> query = em.createQuery("SELECT bl FROM Biglietto bl " +
+                "JOIN WHERE DocumentoVendita dv ON bl.DocumentoVendita = dv.DocumentoVendita WHERE dv.dataDiRilascio = :date", Biglietto.class);
+        query.setParameter("date", data);
         return query.getResultList();
 
-    }public List<Tessera> dammiTesserePuntoEmissione(PuntoVendita puntoV, LocalDate data){
+    }
+
+    public List<Tessera> dammiTesserePuntoEmissione(PuntoVendita puntoV, LocalDate data){
         TypedQuery<Tessera> query = em.createQuery("SELECT ts FROM Tessera ts " +
                 "WHERE ts.dataDiRilascio = :data", Tessera.class);
         query.setParameter("data", data);
