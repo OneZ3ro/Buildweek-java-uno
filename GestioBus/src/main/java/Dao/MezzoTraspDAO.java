@@ -1,6 +1,7 @@
 package DAO;
 
 import entities.MezzoDiTrasporto;
+import entities.Tratta;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
@@ -78,6 +79,11 @@ public class MezzoTraspDAO {
       }
 
     }
+
+  public List<MezzoDiTrasporto> getAllMezziDiTrasporti(){
+    TypedQuery<MezzoDiTrasporto> getAllMezziDiTrasportiQuery = em.createQuery("SELECT m FROM MezzoDiTrasporto m", MezzoDiTrasporto.class);
+    return getAllMezziDiTrasportiQuery.getResultList();
+  }
 
     public void MezzoDiTrasportoRefresh(MezzoDiTrasporto MezzoDiTrasporto) {
       em.refresh(MezzoDiTrasporto);
