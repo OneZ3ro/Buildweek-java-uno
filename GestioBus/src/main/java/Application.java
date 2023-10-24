@@ -14,6 +14,7 @@ import java.util.*;
 import java.time.LocalDateTime;
 
 
+
 public class Application {
     private static final EntityManagerFactory emf = Persistence.createEntityManagerFactory("connections");
 
@@ -29,7 +30,7 @@ public class Application {
         Faker faker = new Faker(new Locale("ITALY"));
         Random rndm = new Random();
 
-        creazioneUtente(ud, faker, rndm);
+       /* creazioneUtente(ud, faker, rndm);
         creazioneTratta(td, faker, rndm);
         creazioneMezzoDiTrasporto(mzd, td, rndm);
         creazionePuntoVedita(pd, faker, rndm);
@@ -43,6 +44,8 @@ public class Application {
         System.out.println(s);
 
 
+        creazioneManutenzione(mtd, mzd, rndm);*/
+        
         try {
             while (b) {
                 Scanner scanner = new Scanner(System.in);
@@ -104,7 +107,7 @@ public class Application {
                             System.out.println("Hai scelto Utente");
                             System.out.println("CHE SERVIZIO");
                             System.out
-                                    .println("0: Torna indietro, 1:Convalida, 2:Acquisto biglietto 3:crea abbonamento");
+                                    .println("0: Torna indietro, 1:Convalida, 2:Acquisto biglietto 3:crea abbonamento,4:Rinnova Abbonamento");
                             int choiceUser = Integer.parseInt(scanner.nextLine());
                             switch (choiceUser) {
                                 case 0: {
@@ -123,15 +126,20 @@ public class Application {
                                     System.out.println("hai scelto crea abbonamento");
                                     break;
                                 }
+                                case 4: {
+                                    System.out.println("hai scelto rinnova abbonamento");
+
+                                    break;
+                                }
                             }
                             break;
                         default:
-                            System.out.println("You need to enter one of the controls above");
+                            System.out.println("Inserisci un campo valido!");
                             choice = Integer.parseInt(scanner.nextLine());
                             break;
                     }
                 } catch (Exception ex) {
-                    System.out.println("you must enter one of the appropriate controls");
+                    System.out.println("Devi inserire un campo valido!");
                 }
             }
 
