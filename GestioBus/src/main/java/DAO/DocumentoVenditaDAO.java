@@ -10,6 +10,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
+import javax.print.Doc;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Date;
@@ -75,28 +76,14 @@ public class DocumentoVenditaDAO {
         }
     }
 
-    public List<Tessera> dammiTesserePerData(LocalDate data){
-        TypedQuery<Tessera> query = em.createQuery("SELECT ts FROM Tessera ts " +
-                "JOIN WHERE DocumentoVendita dv ON ts.DocumentoVendita = dv.DocumentoVendita WHERE dv.dataDiRilascio = :date", Tessera.class);
-        query.setParameter("date", data);
+    public List<DocumentoVendita> dammiTesserePerData(String idPuntoVendita, LocalDate data){
+        UUID idPuntoVenditaS = UUID.fromString(idPuntoVendita);
+        TypedQuery<DocumentoVendita> query = em.createQuery("SELECT dv FROM DocumentoVendita dv " +
+                "WHERE dv.dataDiRilascio = :date and dv.puntoVendita.puntoVenditaId = :puntoVendita", DocumentoVendita.class);
+        query.setParameter("date", data).setParameter("puntoVendita", idPuntoVenditaS);
         return query.getResultList();
-
-    }
-    public List<Biglietto> dammiBIgliettiPerData(LocalDate data){
-        TypedQuery<Biglietto> query = em.createQuery("SELECT bl FROM Biglietto bl " +
-                "JOIN WHERE DocumentoVendita dv ON bl.DocumentoVendita = dv.DocumentoVendita WHERE dv.dataDiRilascio = :date", Biglietto.class);
-        query.setParameter("date", data);
-        return query.getResultList();
-
     }
 
-    public List<Tessera> dammiTesserePuntoEmissione(PuntoVendita puntoV, LocalDate data){
-        TypedQuery<Tessera> query = em.createQuery("SELECT ts FROM Tessera ts " +
-                "WHERE ts.dataDiRilascio = :data", Tessera.class);
-        query.setParameter("data", data);
-        return query.getResultList();
-
-    }
 
     public void save(DocumentoVendita dv) {
         EntityTransaction transaction = em.getTransaction();

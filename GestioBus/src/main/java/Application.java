@@ -10,6 +10,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import java.time.LocalDate;
+import java.time.Year;
 import java.util.*;
 
 public class Application {
@@ -27,12 +28,12 @@ public class Application {
         Faker faker = new Faker(new Locale("ITALY"));
         Random rndm = new Random();
 
-
+        System.out.println("hell world");
 //        creazioneUtente(ud, faker, rndm);
 //        creazioneTratta(td, faker, rndm);
 //        creazioneMezzoDiTrasporto(mzd, td, rndm);
 //        creazionePuntoVedita(pd, faker, rndm);
-//        creazioneDocumentoVendita(dd, ud, mzd, rndm);
+//        creazioneDocumentoVendita(dd, ud, mzd, rndm, pd);
 //        creazioneManutenzione(mtd, mzd, rndm);
 
 //        try {
@@ -222,17 +223,20 @@ public class Application {
         }
     }
 
-    public static void creazioneDocumentoVendita(DocumentoVenditaDAO dd, UtenteDAO ud, MezzoTraspDAO mzd, Random rndm) {
+    public static void creazioneDocumentoVendita(DocumentoVenditaDAO dd, UtenteDAO ud, MezzoTraspDAO mzd, Random rndm, PuntoVenditaDAO pd) {
+
         for (int i = 0; i < 50; i++) {
             int n = rndm.nextInt(0, 1001);
             LocalDate dataDiRilascio = LocalDate.parse(creaRandomData());
             if (n % 2 == 0) {
                 DocumentoVendita documentoVendita = new Biglietto(dataDiRilascio,
+        pd.getAllPuntiVendita().get(rndm.nextInt(0, pd.getAllPuntiVendita().size())),
                         n % 3 == 0 ? null : dataDiRilascio.plusDays(rndm.nextInt(10, 40)),
                         mzd.getAllMezziDiTrasporti().get(rndm.nextInt(0, mzd.getAllMezziDiTrasporti().size())));
                 dd.save(documentoVendita);
             } else {
                 DocumentoVendita documentoVendita = new Tessera(dataDiRilascio,
+                        pd.getAllPuntiVendita().get(rndm.nextInt(0, pd.getAllPuntiVendita().size())),
                         ud.getAllUtenti().get(i),
                         n % 3 == 0 ? TipoAbbonamento.MENSILE : TipoAbbonamento.SETTIMANALE, dataDiRilascio);
                 dd.save(documentoVendita);

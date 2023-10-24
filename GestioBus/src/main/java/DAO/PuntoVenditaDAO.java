@@ -1,9 +1,12 @@
 package DAO;
 
 import entities.PuntoVendita;
+import entities.Tratta;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
+import javax.persistence.TypedQuery;
+import java.util.List;
 import java.util.UUID;
 
 public class PuntoVenditaDAO {
@@ -48,5 +51,10 @@ public class PuntoVenditaDAO {
         } else {
             System.err.println("Il puntoVendita con id" + id + " non è stato trovato");
         }
+    }
+
+    public List<PuntoVendita> getAllPuntiVendita(){
+        TypedQuery<PuntoVendita> getAllPuntiVenditaQuery = em.createQuery("SELECT pv FROM PuntoVendita pv", PuntoVendita.class);
+        return getAllPuntiVenditaQuery.getResultList();
     }
 }
