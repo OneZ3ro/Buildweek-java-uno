@@ -234,7 +234,7 @@ public class Application {
             } else {
                 DocumentoVendita documentoVendita = new Tessera(dataDiRilascio,
                         ud.getAllUtenti().get(i),
-                        n % 3 == 0 ? TipoAbbonamento.MENSILE : TipoAbbonamento.SETTIMANALE, dataDiRilascio, n % 5 == 0);
+                        n % 3 == 0 ? TipoAbbonamento.MENSILE : TipoAbbonamento.SETTIMANALE, dataDiRilascio);
                 dd.save(documentoVendita);
             }
         }
