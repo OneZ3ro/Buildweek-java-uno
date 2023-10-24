@@ -1,8 +1,10 @@
 package entities;
 
+import enums.Stato;
 import enums.TipoDiMezzo;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -14,16 +16,21 @@ public class MezzoDiTrasporto {
     @Enumerated(EnumType.STRING)
     private TipoDiMezzo tipoDiMezzo;
     private long capienza;
+    private Stato stato;
     @ManyToOne
     @JoinColumn(name = "tratta_id")
     private Tratta tratta;
 
+    @OneToMany(mappedBy = "mezzoDiTrasporto")
+    private List<Manutenzione> manutenzioni;
+
     public MezzoDiTrasporto(){}
 
-    public MezzoDiTrasporto(TipoDiMezzo tipoDiMezzo, long capienza, Tratta tratta) {
+    public MezzoDiTrasporto(TipoDiMezzo tipoDiMezzo, long capienza, Tratta tratta, Stato stato) {
         this.tipoDiMezzo = tipoDiMezzo;
         this.capienza = capienza;
         this.tratta = tratta;
+        this.stato = stato;
     }
 
     public TipoDiMezzo getTipoDiMezzo() {
@@ -54,13 +61,23 @@ public class MezzoDiTrasporto {
         return mezzoDiTrasportoId;
     }
 
+    public Stato getStato() {
+        return stato;
+    }
+
+    public List<Manutenzione> getManutenzioni() {
+        return manutenzioni;
+    }
+
     @Override
     public String toString() {
         return "MezzoDiTrasporto{" +
                 "mezzoDiTrasportoId=" + mezzoDiTrasportoId +
-                ", mezzoDiTrasporto=" + tipoDiMezzo +
+                ", tipoDiMezzo=" + tipoDiMezzo +
                 ", capienza=" + capienza +
+                ", stato=" + stato +
                 ", tratta=" + tratta +
+                ", manutenzioni=" + manutenzioni +
                 '}';
     }
 }
