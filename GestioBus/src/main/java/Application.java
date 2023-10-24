@@ -8,10 +8,10 @@ public class Application {
 
     public static void main(String[] args) {
         EntityManager em = emf.createEntityManager();
-
+        boolean b = true;
 
         try {
-            while (true) {
+            while (b) {
                 Scanner scanner = new Scanner(System.in);
                 System.out.println("0: to exit");
                 System.out.println("1: Amministazione");
@@ -21,6 +21,7 @@ public class Application {
                     switch (choice) {
                         case 0:
                             System.out.println("HAI SCELTO DI USCIRE");
+                            b = false;
                             break;
                         case 1:
                             System.out.println("Hai scelto Amministrazione");
