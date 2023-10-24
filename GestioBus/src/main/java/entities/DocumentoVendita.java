@@ -18,7 +18,11 @@ public abstract class DocumentoVendita {
     @JoinTable(name = "puntovendita_documentovendita", joinColumns = @JoinColumn(name = "documento_vendita_id"), inverseJoinColumns = @JoinColumn(name = "punto_vendita_id"))
     private List<PuntoVendita> listaPuntiVendita;
 
-    public DocumentoVendita(){};
+    public DocumentoVendita() {
+    }
+
+    ;
+
     public DocumentoVendita(LocalDate dataDiRilascio) {
         this.dataDiRilascio = dataDiRilascio;
     }

@@ -9,7 +9,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.Locale;
 import java.util.Random;
 import java.util.Scanner;
@@ -29,13 +28,13 @@ public class Application {
         Faker faker = new Faker(new Locale("ITALY"));
         Random rndm = new Random();
 
-        // creazioneUtente(ud, faker, rndm);
-        // creazioneTratta(td, faker, rndm);
-        // creazioneMezzoDiTrasporto(mzd, td, rndm);
-        // creazionePuntoVedita(pd, faker, rndm);
-        // creazioneDocumentoVendita(dd, ud, mzd, rndm); //nella parte di creazione
-        // della tessera che cos'è dataDiEmissione e cosa cambia con dataDiRilascio
-        // creazioneManutenzione(mtd, mzd, rndm);
+        creazioneUtente(ud, faker, rndm);
+        creazioneTratta(td, faker, rndm);
+        creazioneMezzoDiTrasporto(mzd, td, rndm);
+        creazionePuntoVedita(pd, faker, rndm);
+        creazioneDocumentoVendita(dd, ud, mzd, rndm); //nella parte di creazione
+        //della tessera che cos'è dataDiEmissione e cosa cambia con dataDiRilascio
+        creazioneManutenzione(mtd, mzd, rndm);
 
         try {
             while (b) {
@@ -140,7 +139,7 @@ public class Application {
     public static String creaRandomData() {
         Random rndm = new Random();
         ;
-        int anno = rndm.nextInt(1923, 2024);
+        int anno = rndm.nextInt(2021, 2024);
         int mese = rndm.nextInt(1, 13);
         int giorno = 1;
         if (mese == 2) {

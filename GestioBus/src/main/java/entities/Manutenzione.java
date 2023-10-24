@@ -14,8 +14,10 @@ public class Manutenzione {
     @ManyToOne
     @JoinColumn(name = "mezzo_di_trasporto_id")
     private MezzoDiTrasporto mezzoDiTrasporto;
+    private String descrizione;
 
-    public Manutenzione(){}
+    public Manutenzione() {
+    }
 
     public Manutenzione(LocalDate dataInizio, LocalDate dataFine, MezzoDiTrasporto mezzoDiTrasporto) {
         this.dataInizio = dataInizio;
