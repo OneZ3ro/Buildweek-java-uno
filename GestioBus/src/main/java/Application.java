@@ -10,7 +10,9 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import java.time.LocalDate;
-import java.util.*;
+import java.util.Locale;
+import java.util.Random;
+import java.util.Scanner;
 
 public class Application {
     private static final EntityManagerFactory emf = Persistence.createEntityManagerFactory("connections");
@@ -27,14 +29,14 @@ public class Application {
         Faker faker = new Faker(new Locale("ITALY"));
         Random rndm = new Random();
 
-        creazioneUtente(ud, faker, rndm);
+       /* creazioneUtente(ud, faker, rndm);
         creazioneTratta(td, faker, rndm);
         creazioneMezzoDiTrasporto(mzd, td, rndm);
         creazionePuntoVedita(pd, faker, rndm);
         creazioneDocumentoVendita(dd, ud, mzd, rndm); //nella parte di creazione
         //della tessera che cos'è dataDiEmissione e cosa cambia con dataDiRilascio
-        creazioneManutenzione(mtd, mzd, rndm);
-
+        creazioneManutenzione(mtd, mzd, rndm);*/
+        dd.controlloAbbonamento();
         try {
             while (b) {
                 Scanner scanner = new Scanner(System.in);
@@ -212,7 +214,7 @@ public class Application {
         for (int i = 0; i < rndm.nextInt(50, 101); i++) {
             int n = rndm.nextInt(0, 1001);
             if (n % 2 == 0) {
-                PuntoVendita puntoVendita = new Distributore(faker.gameOfThrones().character(), faker.country().capital(), n%3==0 ? StatoDistributore.ATTIVO : StatoDistributore.FUORI_SERVIZIO);
+                PuntoVendita puntoVendita = new Distributore(faker.gameOfThrones().character(), faker.country().capital(), n % 3 == 0 ? StatoDistributore.ATTIVO : StatoDistributore.FUORI_SERVIZIO);
                 pd.save(puntoVendita);
             } else {
                 PuntoVendita puntoVendita = new Rivenditore(faker.gameOfThrones().character(),

@@ -5,10 +5,8 @@ import entities.DocumentoVendita;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
-import javax.persistence.Query;
 import javax.persistence.TypedQuery;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.UUID;
 
 public class DocumentoVenditaDAO {
@@ -24,8 +22,8 @@ public class DocumentoVenditaDAO {
         return em.find(DocumentoVendita.class, id);
     }
 
-    public void controlloAbbonamento(UUID id) {
-        try {
+    public void controlloAbbonamento() {
+       /* try {
             TypedQuery<DocumentoVendita> query = em.createQuery("SELECT ts FROM Tessera ts WHERE ts.documentoVenditaId = :idTessera", DocumentoVendita.class);
             Query query2 = em.createQuery("SELECT ts.dataDiScadenza FROM Tessera ts WHERE ts.documentoVenditaId = :idTessera", DocumentoVendita.class);
 
@@ -51,9 +49,11 @@ public class DocumentoVenditaDAO {
             }
         } catch (Exception e) {
             System.out.println("Errore nel caricamento dati: " + e.getMessage());
-        }
-
-
+        }*/
+        LocalDate oggi = LocalDate.now();
+        TypedQuery<DocumentoVendita> query = em.createQuery("SELECT ts FROM Tessera ts WHERE ts.dataDiScadenza > :oggi", DocumentoVendita.class);
+        query.setParameter("oggi", oggi);
+        query.getResultList().forEach(System.out::println);
     }
 
     public void save(DocumentoVendita dv) {
