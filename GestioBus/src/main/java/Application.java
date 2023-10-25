@@ -28,6 +28,8 @@ public class Application {
         Faker faker = new Faker(new Locale("ITALY"));
         Random rndm = new Random();
 
+        dd.controlloAbbonamento("da00f72f-c127-4068-a371-07a4dfad1d7c");
+
         System.out.println("hell world");
 //        creazioneUtente(ud, faker, rndm);
 //        creazioneTratta(td, faker, rndm);

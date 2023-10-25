@@ -30,32 +30,25 @@ public class DocumentoVenditaDAO {
         return em.find(DocumentoVendita.class, id);
     }
 
-    public void controlloAbbonamento(UUID id) {
+    public void controlloAbbonamento(String id) {
+        UUID idTessera = UUID.fromString(id);
         try {
             TypedQuery<DocumentoVendita> query = em.createQuery("SELECT ts FROM Tessera ts WHERE ts.documentoVenditaId = :idTessera", DocumentoVendita.class);
-            Query query2 = em.createQuery("SELECT ts.dataDiScadenza FROM Tessera ts WHERE ts.documentoVenditaId = :idTessera", DocumentoVendita.class);
-
-
-            query.setParameter("idTessera", id);
-            query2.setParameter("idTessera", id);
+            query.setParameter("idTessera", idTessera);
             Object result = query.getSingleResult();
-            SimpleDateFormat sdformat = new SimpleDateFormat("yyyy-MM-dd");
-
-            if (result == null) {
-                System.out.println("Non è stato possibile trovare il Documento con N:" + " " + id + "!!");
-            } else {
-                String result2 = (String) query2.getSingleResult();
-
-                Date todayDate = sdformat.parse(sdformat.format(new Date()));
-                Date d1 = sdformat.parse(result2);
-                if (d1.compareTo(todayDate) > 0) {
-                    System.out.println("La tessera N:" + " " + id + " " + "è scaduta il:" + " " + d1);
+            System.out.println(result);
+            if (result != null){
+                SimpleDateFormat sdformat = new SimpleDateFormat("yyyy-MM-dd");
+                Query query2 = em.createQuery("SELECT ts.dataDiScadenza FROM Tessera ts WHERE ts.documentoVenditaId = :idTessera", LocalDate.class);
+                query2.setParameter("idTessera", idTessera);
+                LocalDate result2 = (LocalDate) query2.getSingleResult();
+                if (!result2.isAfter(LocalDate.now())) {
+                    System.out.println("La tessera N:" + " " + id + " " + "è scaduta il: " + result2);
                 } else {
-                    System.out.println("Tessera ancora in corso di valisità, scade il:" + " " + d1);
+                    System.out.println("Tessera ancora in corso di valisità, scade il: " + result2);
                 }
-
             }
-        } catch (Exception e) {
+        } catch(Exception e) {
             System.out.println("Errore nel caricamento dati: " + e.getMessage());
         }
 
