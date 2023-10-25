@@ -69,14 +69,13 @@ public class DocumentoVenditaDAO {
         }
     }
 
-    public List<DocumentoVendita> dammiTesserePerData(String idPuntoVendita, LocalDate data){
+    public List<DocumentoVendita> dammiDocumentiVenditaPerData(String idPuntoVendita, LocalDate data){
         UUID idPuntoVenditaS = UUID.fromString(idPuntoVendita);
         TypedQuery<DocumentoVendita> query = em.createQuery("SELECT dv FROM DocumentoVendita dv " +
                 "WHERE dv.dataDiRilascio = :date and dv.puntoVendita.puntoVenditaId = :puntoVendita", DocumentoVendita.class);
         query.setParameter("date", data).setParameter("puntoVendita", idPuntoVenditaS);
         return query.getResultList();
     }
-
 
     public void save(DocumentoVendita dv) {
         EntityTransaction transaction = em.getTransaction();
