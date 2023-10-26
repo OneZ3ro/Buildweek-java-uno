@@ -19,6 +19,8 @@ public class MezzoDiTrasporto {
     private long capienza;
     @Enumerated(EnumType.STRING)
     private Stato stato;
+
+    private int contoTratte;
     @ManyToOne
     @JoinColumn(name = "tratta_id")
     private Tratta tratta;
@@ -32,11 +34,12 @@ public class MezzoDiTrasporto {
     public MezzoDiTrasporto() {
     }
 
-    public MezzoDiTrasporto(TipoDiMezzo tipoDiMezzo, long capienza, Tratta tratta, Stato stato) {
+    public MezzoDiTrasporto(TipoDiMezzo tipoDiMezzo, long capienza, Tratta tratta, Stato stato, int contoTratte) {
         this.tipoDiMezzo = tipoDiMezzo;
         this.capienza = capienza;
         this.tratta = tratta;
         this.stato = stato;
+        this.contoTratte = contoTratte;
     }
 
     public TipoDiMezzo getTipoDiMezzo() {

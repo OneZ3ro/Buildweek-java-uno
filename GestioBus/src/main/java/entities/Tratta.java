@@ -2,7 +2,6 @@ package entities;
 
 import javax.persistence.*;
 import java.util.List;
-import java.util.Set;
 import java.util.UUID;
 
 @Entity
@@ -16,15 +15,16 @@ public class Tratta {
 
     @OneToMany(mappedBy = "tratta")
     private List<MezzoDiTrasporto> trasporti;
-    @OneToMany(mappedBy = "tratta")
-    private Set<ControlloTratta> checks;
+    private long tempoMedio;
+
 
     public Tratta() {
     }
 
-    public Tratta(String partenza, String destinazione) {
+    public Tratta(String partenza, String destinazione, long tempoMedio) {
         this.partenza = partenza;
         this.destinazione = destinazione;
+        this.tempoMedio = tempoMedio;
     }
 
     public String getPartenza() {
@@ -49,6 +49,14 @@ public class Tratta {
 
     public List<MezzoDiTrasporto> getTrasporti() {
         return trasporti;
+    }
+
+    public long getTempoMedio() {
+        return tempoMedio;
+    }
+
+    public void setTempoMedio(long tempoMedio) {
+        this.tempoMedio = tempoMedio;
     }
 
     @Override
