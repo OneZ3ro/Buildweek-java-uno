@@ -1,5 +1,6 @@
 package DAO;
 
+import entities.Manutenzione;
 import entities.MezzoDiTrasporto;
 
 import javax.persistence.EntityManager;
@@ -68,11 +69,11 @@ public class MezzoTraspDAO {
         }
     }
 
-    public MezzoDiTrasporto getById(String id) {
+    public MezzoDiTrasporto getById(UUID id) {
         return em.find(MezzoDiTrasporto.class, id);
     }
 
-    public void deleteMezzoDiTrasportoById(String id) {
+    public void deleteMezzoDiTrasportoById(UUID id) {
         MezzoDiTrasporto MezzoDiTrasportoToremove = getById(id);
         if (id != null) {
             EntityTransaction trc = em.getTransaction();
@@ -104,6 +105,15 @@ public class MezzoTraspDAO {
     public void getContaTratte(String mId) {
         UUID id = UUID.fromString(mId);
         TypedQuery<Integer> getContaTratteQuery = em.createQuery("SELECT m.contoTratte FROM MezzoDiTrasporto m WHERE m.mezzoDiTrasportoId=:id", Integer.class);
+        getContaTratteQuery.setParameter("id", id);
+        System.out.println("Il mezzo inserto ha percorso la tratta :" + getContaTratteQuery.getSingleResult() + " volte");
+    }
+
+    public void getPeriodoMezzoAttivo(String mId) {
+        UUID id = UUID.fromString(mId);
+        ManutenzioneDAO mzd = new ManutenzioneDAO(em);
+        List<Manutenzione> manutenzioneList = mzd.listaManutenzioneMezzi(mId);
+        TypedQuery<MezzoDiTrasporto> getContaTratteQuery = em.createQuery("SELECT m FROM MezzoDiTrasporto m  WHERE m.mezzoDiTrasportoId=:id", MezzoDiTrasporto.class);
         getContaTratteQuery.setParameter("id", id);
         System.out.println("Il mezzo inserto ha percorso la tratta :" + getContaTratteQuery.getSingleResult() + " volte");
     }

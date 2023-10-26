@@ -4,6 +4,7 @@ import enums.Stato;
 import enums.TipoDiMezzo;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
@@ -27,19 +28,25 @@ public class MezzoDiTrasporto {
 
     @OneToMany(mappedBy = "mezzoDiTrasporto")
     private List<Manutenzione> manutenzioni;
+
+    @OneToMany(mappedBy = "mezzoDiTrasporto")
+    private List<Biglietto> bigliettoList;
+
     @OneToMany(mappedBy = "mezzoDiTrasporto")
     private Set<ControlloTratta> checks;
 
+    private LocalDate dataDiImmatricolazione;
 
     public MezzoDiTrasporto() {
     }
 
-    public MezzoDiTrasporto(TipoDiMezzo tipoDiMezzo, long capienza, Tratta tratta, Stato stato, int contoTratte) {
+    public MezzoDiTrasporto(TipoDiMezzo tipoDiMezzo, long capienza, Tratta tratta, Stato stato, int contoTratte, LocalDate dataDiImmatricolazione) {
         this.tipoDiMezzo = tipoDiMezzo;
         this.capienza = capienza;
         this.tratta = tratta;
         this.stato = stato;
         this.contoTratte = contoTratte;
+        this.dataDiImmatricolazione = dataDiImmatricolazione;
     }
 
     public TipoDiMezzo getTipoDiMezzo() {
@@ -76,6 +83,18 @@ public class MezzoDiTrasporto {
 
     public List<Manutenzione> getManutenzioni() {
         return manutenzioni;
+    }
+
+    public LocalDate getDataDiImmatricolazione() {
+        return dataDiImmatricolazione;
+    }
+
+    public void setDataDiImmatricolazione(LocalDate dataDiImmatricolazione) {
+        this.dataDiImmatricolazione = dataDiImmatricolazione;
+    }
+
+    public List<Biglietto> getBigliettoList() {
+        return bigliettoList;
     }
 
     @Override

@@ -10,9 +10,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import java.time.LocalDate;
-import java.util.Locale;
-import java.util.Random;
-import java.util.Scanner;
+import java.util.*;
 
 public class Application {
     private static final EntityManagerFactory emf = Persistence.createEntityManagerFactory("connections");
@@ -30,20 +28,28 @@ public class Application {
         Faker faker = new Faker(new Locale("ITALY"));
         Random rndm = new Random();
 
-        dd.bigliettiVidimatiPerPeriodo("2dff96c3-cb0e-446f-904f-dc803143ae30", LocalDate.parse("2023-01-09"), LocalDate.parse("2024-01-09"));
+//        dd.bigliettiVidimatiPerPeriodo("2dff96c3-cb0e-446f-904f-dc803143ae30", LocalDate.parse("2023-01-09"), LocalDate.parse("2024-01-09"));
 
-        System.out.println("hello world");
-        /*creazioneUtente(ud, faker, rndm);
-        creazioneTratta(td, faker, rndm);
-        creazioneMezzoDiTrasporto(mzd, td, rndm);
-        creazionePuntoVedita(pd, faker, rndm);
-        creazioneDocumentoVendita(dd, ud, mzd, rndm, pd);
-        creazioneManutenzione(mtd, mzd, rndm);
-        creaControlloTratta(cd, mzd, rndm);
-        mtd.listaManutenzioneMezzi("0b378bcb-c0cf-4619-8bc6-833c007f9de5").forEach(System.out::println);*/
+//        System.out.println("hello world");
 
-         
-        mzd.getContaTratte("332f4b16-8230-48f2-90d3-492f6b25859c");
+//        creazioneUtente(ud, faker, rndm);
+//        creazioneTratta(td, faker, rndm);
+//        creazioneMezzoDiTrasporto(mzd, td, rndm);
+//        creazionePuntoVedita(pd, faker, rndm);
+//        creazioneDocumentoVendita(dd, ud, mzd, rndm, pd);
+//        creazioneManutenzione(mtd, mzd, rndm);
+//        creaControlloTratta(cd, mzd, rndm);
+
+//        mtd.listaManutenzioneMezzi("0b378bcb-c0cf-4619-8bc6-833c007f9de5").forEach(System.out::println);
+//
+//        mzd.getContaTratte("332f4b16-8230-48f2-90d3-492f6b25859c");
+        MezzoDiTrasporto mezzoDiTrasporto = mzd.getById(UUID.fromString("276f2034-5560-45fc-8895-6d08557c0b86"));
+        List<Biglietto> bigliettoList = mezzoDiTrasporto.getBigliettoList();
+        for (int i = 0; i < bigliettoList.size(); i++) {
+            if (bigliettoList.get(i).getDataDiConvalidazione() != null) {
+                System.out.println(bigliettoList.get(i));
+            }
+        }
         try {
             while (b) {
                 Scanner scanner = new Scanner(System.in);
@@ -183,7 +189,7 @@ public class Application {
     }
 
     public static void creazioneUtente(UtenteDAO ud, Faker faker, Random rndm) {
-        for (int i = 0; i < 50; i++) {
+        for (int i = 0; i < 200; i++) {
             Utente utente = new Utente(faker.funnyName().name(), faker.funnyName().name(),
                     LocalDate.parse(creaRandomData()));
             ud.save(utente);
@@ -203,12 +209,12 @@ public class Application {
             if (n % 2 == 0) {
                 MezzoDiTrasporto mezzoDiTrasporto = new MezzoDiTrasporto(TipoDiMezzo.AUTOBUS, rndm.nextLong(40, 101),
                         td.getAllTratte().get(rndm.nextInt(0, td.getAllTratte().size())),
-                        n % 3 == 0 ? Stato.IN_SERVIZIO : Stato.IN_MANUTENZIONE, rndm.nextInt(1, 6));
+                        n % 3 == 0 ? Stato.IN_MANUTENZIONE : Stato.IN_SERVIZIO, rndm.nextInt(1, 6), LocalDate.parse(creaRandomData()));
                 mzd.save(mezzoDiTrasporto);
             } else {
                 MezzoDiTrasporto mezzoDiTrasporto = new MezzoDiTrasporto(TipoDiMezzo.TRAM, rndm.nextLong(40, 101),
                         td.getAllTratte().get(rndm.nextInt(0, td.getAllTratte().size())),
-                        n % 3 == 0 ? Stato.IN_SERVIZIO : Stato.IN_MANUTENZIONE, rndm.nextInt(1, 6));
+                        n % 3 == 0 ? Stato.IN_MANUTENZIONE : Stato.IN_SERVIZIO, rndm.nextInt(1, 6), LocalDate.parse(creaRandomData()));
                 mzd.save(mezzoDiTrasporto);
             }
         }
@@ -233,21 +239,24 @@ public class Application {
     public static void creazioneDocumentoVendita(DocumentoVenditaDAO dd, UtenteDAO ud, MezzoTraspDAO mzd, Random rndm,
                                                  PuntoVenditaDAO pd) {
 
-        for (int i = 0; i < 50; i++) {
+        for (int i = 0; i < 200; i++) {
             int n = rndm.nextInt(0, 1001);
-            LocalDate dataDiRilascio = LocalDate.parse(creaRandomData());
-            if (n % 2 == 0) {
-                DocumentoVendita documentoVendita = new Biglietto(dataDiRilascio,
-                        pd.getAllPuntiVendita().get(rndm.nextInt(0, pd.getAllPuntiVendita().size())),
-                        n % 3 == 0 ? null : dataDiRilascio.plusDays(rndm.nextInt(10, 40)),
-                        mzd.getAllMezziDiTrasporti().get(rndm.nextInt(0, mzd.getAllMezziDiTrasporti().size())));
-                dd.save(documentoVendita);
-            } else {
-                DocumentoVendita documentoVendita = new Tessera(dataDiRilascio,
-                        pd.getAllPuntiVendita().get(rndm.nextInt(0, pd.getAllPuntiVendita().size())),
-                        ud.getAllUtenti().get(i),
-                        n % 3 == 0 ? TipoAbbonamento.MENSILE : TipoAbbonamento.SETTIMANALE, dataDiRilascio);
-                dd.save(documentoVendita);
+            MezzoDiTrasporto mezzoDiTrasporto = mzd.getAllMezziDiTrasporti().get(rndm.nextInt(0, mzd.getAllMezziDiTrasporti().size()));
+            if (mezzoDiTrasporto.getStato() == Stato.IN_SERVIZIO) {
+                LocalDate dataDiRilascio = LocalDate.parse(creaRandomData());
+                if (n % 2 == 0) {
+                    DocumentoVendita documentoVendita = new Biglietto(dataDiRilascio,
+                            pd.getAllPuntiVendita().get(rndm.nextInt(0, pd.getAllPuntiVendita().size())),
+                            n % 3 == 0 ? null : mezzoDiTrasporto.getDataDiImmatricolazione().plusDays(rndm.nextInt(0, 1000)),
+                            mezzoDiTrasporto);
+                    dd.save(documentoVendita);
+                } else {
+                    DocumentoVendita documentoVendita = new Tessera(dataDiRilascio,
+                            pd.getAllPuntiVendita().get(rndm.nextInt(0, pd.getAllPuntiVendita().size())),
+                            ud.getAllUtenti().get(i),
+                            n % 3 == 0 ? TipoAbbonamento.MENSILE : TipoAbbonamento.SETTIMANALE, dataDiRilascio);
+                    dd.save(documentoVendita);
+                }
             }
         }
     }
@@ -255,11 +264,14 @@ public class Application {
     public static void creazioneManutenzione(ManutenzioneDAO mtd, MezzoTraspDAO mzd, Random rndm) {
         String[] app = {"Cambio vetri", "Riparazione freni", "Cambio olio"};
         for (int i = 0; i < rndm.nextInt(50, 101); i++) {
-            LocalDate dataInizio = LocalDate.parse(creaRandomData());
-            Manutenzione manutenzione = new Manutenzione(dataInizio, dataInizio.plusDays(rndm.nextInt(3, 201)),
-                    mzd.getAllMezziDiTrasporti().get(rndm.nextInt(0, mzd.getAllMezziDiTrasporti().size())),
-                    app[rndm.nextInt(0, app.length)]);
-            mtd.save(manutenzione);
+            MezzoDiTrasporto mezzoDiTrasporto = mzd.getAllMezziDiTrasporti().get(rndm.nextInt(0, mzd.getAllMezziDiTrasporti().size()));
+            LocalDate dataInizio = mezzoDiTrasporto.getDataDiImmatricolazione();
+            if (mezzoDiTrasporto.getStato() != Stato.IN_SERVIZIO) {
+                Manutenzione manutenzione = new Manutenzione(dataInizio.plusDays(rndm.nextInt(3, 101)), dataInizio.plusDays(rndm.nextInt(101, 201)),
+                        mezzoDiTrasporto,
+                        app[rndm.nextInt(0, app.length)]);
+                mtd.save(manutenzione);
+            }
         }
     }
 
