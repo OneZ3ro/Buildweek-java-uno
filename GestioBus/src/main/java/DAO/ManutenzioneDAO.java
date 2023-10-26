@@ -4,12 +4,24 @@ import entities.Manutenzione;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
+import javax.persistence.TypedQuery;
+import java.time.LocalDate;
 import java.util.UUID;
 
 public class ManutenzioneDAO {
     private final EntityManager em;
     public ManutenzioneDAO(EntityManager em) {
         this.em = em;
+    }
+
+    public void periodiServiziMezzo (String idMezzo){
+        UUID idConvertito = UUID.fromString(idMezzo);
+        TypedQuery<LocalDate> query = em.createQuery("SELECT DISTINCT bl.dataDiConvalidazione FROM Biglietto bl " +
+                "WHERE mezzoDiTrasporto.mezzoDiTrasportoId = :idMezzo and bl.dataDiConvalidazione IS NOT NULL", LocalDate.class);
+        query.setParameter("idMezzo", idConvertito);
+
+        query.getResultList().forEach(System.out::println);
+
     }
 
     public void save(Manutenzione manutenzione) {
