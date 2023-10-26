@@ -40,8 +40,9 @@ public class Application {
         creazioneDocumentoVendita(dd, ud, mzd, rndm, pd);
         creazioneManutenzione(mtd, mzd, rndm);
         creaControlloTratta(cd, mzd, rndm);
+        mtd.listaManutenzioneMezzi("0b378bcb-c0cf-4619-8bc6-833c007f9de5").forEach(System.out::println);*/
 
-         */
+         
         mzd.getContaTratte("332f4b16-8230-48f2-90d3-492f6b25859c");
         try {
             while (b) {
