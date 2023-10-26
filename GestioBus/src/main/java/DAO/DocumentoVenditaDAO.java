@@ -1,5 +1,6 @@
 package DAO;
 
+import entities.Biglietto;
 import entities.DocumentoVendita;
 
 import javax.persistence.EntityManager;
@@ -72,6 +73,47 @@ public class DocumentoVenditaDAO {
                 DocumentoVendita.class);
         query.setParameter("date", data).setParameter("puntoVendita", idPuntoVenditaS);
         return query.getResultList();
+    }
+
+    public void totaleBigliettiVidimati(String idMezzo){
+            UUID uuidMezzo = UUID.fromString(idMezzo);
+            TypedQuery<Biglietto> query = em.createQuery("SELECT bl FROM Biglietto bl " +
+                            "WHERE bl.mezzoDiTrasporto.mezzoDiTrasportoId = :idMezzo AND bl.dataDiConvalidazione IS NOT NULL",
+                    Biglietto.class);
+          query.setParameter("idMezzo", uuidMezzo);
+          List<Biglietto> result = query.getResultList();
+           if(result.isEmpty()){
+               System.out.println("Non ci sono biglietti vidimati innerenti al mezzo di trasporto inserito");
+           }else {
+               System.out.println("Biglietti vidimati in totale: " + result.size());
+           }
+
+    }
+    public void bigliettiVidimatiPerData(String idMezzo, LocalDate data){
+        UUID uuidMezzo = UUID.fromString(idMezzo);
+        TypedQuery<Biglietto> query = em.createQuery("SELECT bl FROM Biglietto bl " +
+                        "WHERE bl.mezzoDiTrasporto.mezzoDiTrasportoId = :idMezzo and bl.dataDiConvalidazione = :data",
+                Biglietto.class);
+        query.setParameter("idMezzo", uuidMezzo).setParameter("data", data);
+        List<Biglietto> result = query.getResultList();
+        if(result.isEmpty()){
+            System.out.println("Non ci sono biglietti vidimati innerenti al mezzo di trasporto inserito");
+        }else {
+            System.out.println("Biglietti vidimati in totale: " + result.size() + " il " + data);
+        }
+    }
+    public void bigliettiVidimatiPerPeriodo(String idMezzo, LocalDate startDate, LocalDate endDate){
+        UUID uuidMezzo = UUID.fromString(idMezzo);
+        TypedQuery<Biglietto> query = em.createQuery("SELECT bl FROM Biglietto bl " +
+                        "WHERE bl.mezzoDiTrasporto.mezzoDiTrasportoId = :idMezzo and bl.dataDiConvalidazione BETWEEN :startDate AND :endDate",
+                Biglietto.class);
+        query.setParameter("idMezzo", uuidMezzo).setParameter("startDate", startDate).setParameter("endDate", endDate);
+        List<Biglietto> result = query.getResultList();
+        if(result.isEmpty()){
+            System.out.println("Non ci sono biglietti vidimati inerenti al mezzo di trasporto inserito");
+        }else {
+            System.out.println("Biglietti vidimati in totale tra il " + startDate + " e il " + endDate + " sono : " + result.size() + " biglietti ");
+        }
     }
 
     public void save(DocumentoVendita dv) {

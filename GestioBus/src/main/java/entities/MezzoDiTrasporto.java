@@ -28,6 +28,7 @@ public class MezzoDiTrasporto {
     @OneToMany(mappedBy = "mezzoDiTrasporto")
     private Set<ControlloTratta> checks;
 
+
     public MezzoDiTrasporto() {
     }
 

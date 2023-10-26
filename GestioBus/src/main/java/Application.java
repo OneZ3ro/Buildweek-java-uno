@@ -29,9 +29,9 @@ public class Application {
         Faker faker = new Faker(new Locale("ITALY"));
         Random rndm = new Random();
 
-        dd.controlloAbbonamento("da00f72f-c127-4068-a371-07a4dfad1d7c");
+//        dd.bigliettiVidimatiPerPeriodo("2dff96c3-cb0e-446f-904f-dc803143ae30", LocalDate.parse("2023-01-09"), LocalDate.parse("2024-01-09"));
 
-        System.out.println("hell world");
+        System.out.println("hello world");
         // creazioneUtente(ud, faker, rndm);
         // creazioneTratta(td, faker, rndm);
         // creazioneMezzoDiTrasporto(mzd, td, rndm);
@@ -125,7 +125,6 @@ public class Application {
         // break;
         // default:
         // System.out.println("You need to enter one of the controls above");
-        // choice = Integer.parseInt(scanner.nextLine());
         // break;
         // }
         // } catch (Exception ex) {
