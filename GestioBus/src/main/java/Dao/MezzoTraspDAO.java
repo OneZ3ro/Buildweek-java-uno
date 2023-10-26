@@ -84,11 +84,12 @@ public class MezzoTraspDAO {
         }
     }
 
-    public MezzoDiTrasporto getById(UUID id) {
+    public MezzoDiTrasporto getById(String mid) {
+        UUID id = UUID.fromString(mid);
         return em.find(MezzoDiTrasporto.class, id);
     }
 
-    public void deleteMezzoDiTrasportoById(UUID id) {
+    public void deleteMezzoDiTrasportoById(String id) {
         MezzoDiTrasporto MezzoDiTrasportoToremove = getById(id);
         if (id != null) {
             EntityTransaction trc = em.getTransaction();
