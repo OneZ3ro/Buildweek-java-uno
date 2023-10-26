@@ -4,12 +4,26 @@ import entities.Manutenzione;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
+import javax.persistence.TypedQuery;
+import java.util.List;
 import java.util.UUID;
 
 public class ManutenzioneDAO {
     private final EntityManager em;
+
     public ManutenzioneDAO(EntityManager em) {
         this.em = em;
+    }
+
+
+    public List<Manutenzione> listaManutenzioneMezzi(String mezzoId) {
+        UUID idConvertito = UUID.fromString(mezzoId);
+
+        TypedQuery<Manutenzione> query = em.createQuery("SELECT mm FROM Manutenzione mm WHERE mm.mezzoDiTrasporto.mezzoDiTrasportoId = :mezzoId ", Manutenzione.class);
+        query.setParameter("mezzoId", idConvertito);
+
+
+        return query.getResultList();
     }
 
     public void save(Manutenzione manutenzione) {
@@ -49,4 +63,5 @@ public class ManutenzioneDAO {
             System.err.println("La manutenzione con id" + id + " non è stata trovata");
         }
     }
+
 }

@@ -10,9 +10,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import java.time.LocalDate;
-import java.time.Year;
-import java.util.*;
-import java.time.LocalDateTime;
+import java.util.Locale;
+import java.util.Random;
 
 public class Application {
     private static final EntityManagerFactory emf = Persistence.createEntityManagerFactory("connections");
@@ -31,13 +30,14 @@ public class Application {
 
 //        dd.bigliettiVidimatiPerPeriodo("2dff96c3-cb0e-446f-904f-dc803143ae30", LocalDate.parse("2023-01-09"), LocalDate.parse("2024-01-09"));
 
-        System.out.println("hello world");
-        // creazioneUtente(ud, faker, rndm);
-        // creazioneTratta(td, faker, rndm);
-        // creazioneMezzoDiTrasporto(mzd, td, rndm);
-        // creazionePuntoVedita(pd, faker, rndm);
-        // creazioneDocumentoVendita(dd, ud, mzd, rndm, pd);
-        // creazioneManutenzione(mtd, mzd, rndm);
+       /* System.out.println("hello world");
+        creazioneUtente(ud, faker, rndm);
+        creazioneTratta(td, faker, rndm);
+        creazioneMezzoDiTrasporto(mzd, td, rndm);
+        creazionePuntoVedita(pd, faker, rndm);
+        creazioneDocumentoVendita(dd, ud, mzd, rndm, pd);
+        creazioneManutenzione(mtd, mzd, rndm);
+        mtd.listaManutenzioneMezzi("0b378bcb-c0cf-4619-8bc6-833c007f9de5").forEach(System.out::println);*/
 
         // try {
         // while (b) {
@@ -230,7 +230,7 @@ public class Application {
     }
 
     public static void creazioneDocumentoVendita(DocumentoVenditaDAO dd, UtenteDAO ud, MezzoTraspDAO mzd, Random rndm,
-            PuntoVenditaDAO pd) {
+                                                 PuntoVenditaDAO pd) {
 
         for (int i = 0; i < 50; i++) {
             int n = rndm.nextInt(0, 1001);
@@ -252,7 +252,7 @@ public class Application {
     }
 
     public static void creazioneManutenzione(ManutenzioneDAO mtd, MezzoTraspDAO mzd, Random rndm) {
-        String[] app = { "Cambio vetri", "Riparazione freni", "Cambio olio" };
+        String[] app = {"Cambio vetri", "Riparazione freni", "Cambio olio"};
         for (int i = 0; i < rndm.nextInt(50, 101); i++) {
             LocalDate dataInizio = LocalDate.parse(creaRandomData());
             Manutenzione manutenzione = new Manutenzione(dataInizio, dataInizio.plusDays(rndm.nextInt(3, 201)),
