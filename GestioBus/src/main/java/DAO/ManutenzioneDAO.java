@@ -16,13 +16,14 @@ public class ManutenzioneDAO {
         this.em = em;
     }
 
-    public void periodiServiziMezzo (String idMezzo){
+    public void periodiServiziMezzo(String idMezzo) {
         UUID idConvertito = UUID.fromString(idMezzo);
         TypedQuery<LocalDate> query = em.createQuery("SELECT DISTINCT bl.dataDiConvalidazione FROM Biglietto bl " +
                 "WHERE mezzoDiTrasporto.mezzoDiTrasportoId = :idMezzo and bl.dataDiConvalidazione IS NOT NULL", LocalDate.class);
         query.setParameter("idMezzo", idConvertito);
 
-        query.getResultList().forEach(System.out::println);}
+        query.getResultList().forEach(System.out::println);
+    }
 
 
     public List<Manutenzione> listaManutenzioneMezzi(String mezzoId) {
@@ -71,6 +72,12 @@ public class ManutenzioneDAO {
         } else {
             System.err.println("La manutenzione con id" + id + " non è stata trovata");
         }
+    }
+
+    public LocalDate getFineData(UUID id) {
+        TypedQuery<LocalDate> localDateTypedQuery = em.createQuery("SELECT DISTINCT m.dataFine FROM Manutenzione m WHERE m.mezzoDiTrasporto.mezzoDiTrasportoId = :id", LocalDate.class);
+        localDateTypedQuery.setParameter("id", id);
+        return localDateTypedQuery.getSingleResult();
     }
 
 }

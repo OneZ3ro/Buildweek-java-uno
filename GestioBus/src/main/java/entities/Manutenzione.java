@@ -58,6 +58,7 @@ public class Manutenzione {
         this.descrizione = descrizione;
     }
 
+
     @Override
     public String toString() {
         return "Manutenzione{" +
