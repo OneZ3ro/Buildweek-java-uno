@@ -42,10 +42,11 @@ public class DocumentoVenditaDAO {
                 Query query2 = em.createQuery("SELECT ts.dataDiScadenza FROM Tessera ts WHERE ts.documentoVenditaId = :idTessera", LocalDate.class);
                 query2.setParameter("idTessera", idTessera);
                 LocalDate result2 = (LocalDate) query2.getSingleResult();
-                if (!result2.isAfter(LocalDate.now())) {
+
+                if (result2.isBefore(LocalDate.now())) {
                     System.out.println("La tessera N:" + " " + id + " " + "è scaduta il: " + result2);
                 } else {
-                    System.out.println("Tessera ancora in corso di valisità, scade il: " + result2);
+                    System.out.println("Tessera ancora in corso di validità, scade il: " + result2);
                 }
             }
         } catch(Exception e) {
