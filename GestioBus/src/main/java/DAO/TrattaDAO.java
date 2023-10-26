@@ -10,6 +10,7 @@ import java.util.UUID;
 
 public class TrattaDAO {
     private final EntityManager em;
+
     public TrattaDAO(EntityManager em) {
         this.em = em;
     }
@@ -23,6 +24,11 @@ public class TrattaDAO {
     }
 
     public Tratta getById(UUID id) {
+        return em.find(Tratta.class, id);
+    }
+
+    public Tratta getById2(String tId) {
+        UUID id = UUID.fromString(tId);
         return em.find(Tratta.class, id);
     }
 
@@ -52,7 +58,7 @@ public class TrattaDAO {
         }
     }
 
-    public List<Tratta> getAllTratte(){
+    public List<Tratta> getAllTratte() {
         TypedQuery<Tratta> getAllTratteQuery = em.createQuery("SELECT t FROM Tratta t", Tratta.class);
         return getAllTratteQuery.getResultList();
     }

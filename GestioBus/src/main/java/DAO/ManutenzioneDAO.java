@@ -73,4 +73,26 @@ public class ManutenzioneDAO {
         }
     }
 
+    public List<Manutenzione> getAllManutenzioni() {
+        TypedQuery<Manutenzione> getAllManutenzioniQuery = em.createQuery("SELECT m FROM Manutenzione m", Manutenzione.class);
+        return getAllManutenzioniQuery.getResultList();
+    }
+
+    public List<Manutenzione> getAllManutenzioniPerMezzo(String mId) {
+        UUID id = UUID.fromString(mId);
+        TypedQuery<Manutenzione> getAllManutenzioniPerMezzoQuery = em.createQuery("SELECT m FROM Manutenzione m WHERE m.mezzoDiTrasporto.mezzoDiTrasportoId=:id", Manutenzione.class);
+        getAllManutenzioniPerMezzoQuery.setParameter("id", id);
+        return getAllManutenzioniPerMezzoQuery.getResultList();
+    }
+
+    public void uscitaMezzoManutenzione(String mId) {
+        UUID id = UUID.fromString(mId);
+        Manutenzione m = em.find(Manutenzione.class, id);
+        EntityTransaction transaction = em.getTransaction();
+        transaction.begin();
+        m.setDataFine();
+        em.merge(m);
+        transaction.commit();
+        System.out.println("Data aggiornata");
+    }
 }

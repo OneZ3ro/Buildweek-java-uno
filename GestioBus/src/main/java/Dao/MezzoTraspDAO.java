@@ -28,7 +28,22 @@ public class MezzoTraspDAO {
             } else {
                 System.out.println(result);
             }
+        } catch (Exception e) {
+            System.out.println("There was an error loading data");
+            throw e;
+        }
+    }
 
+    public void getTransportStatus() {
+        try {
+            TypedQuery<MezzoDiTrasporto> getResultQuery = em.createQuery("SELECT mt.stato FROM MezzoDiTrasporto mt WHERE mt.MezzoDiTrasporto.stato", MezzoDiTrasporto.class);
+
+            Object result = getResultQuery.getSingleResult();
+            if (result == null) {
+                System.out.println("Ci dispiace l'id inserito è errato");
+            } else {
+                System.out.println(result);
+            }
         } catch (Exception e) {
             System.out.println("There was an error loading data");
             throw e;
