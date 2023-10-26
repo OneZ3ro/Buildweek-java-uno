@@ -31,13 +31,13 @@ public class Application {
         Random rndm = new Random();
 
 
-        creazioneUtente(ud, faker, rndm);
-        creazioneTratta(td, faker, rndm);
-        creazioneMezzoDiTrasporto(mzd, td, rndm);
-        creazionePuntoVedita(pd, faker, rndm);
-        creazioneDocumentoVendita(dd, ud, mzd, rndm, pd);
-        creazioneManutenzione(mtd, mzd, rndm);
-        creaControlloTratta(cd, mzd, rndm);
+        //  creazioneUtente(ud, faker, rndm);
+        //  creazioneTratta(td, faker, rndm);
+        //  creazioneMezzoDiTrasporto(mzd, td, rndm);
+        //  creazionePuntoVedita(pd, faker, rndm);
+        //  creazioneDocumentoVendita(dd, ud, mzd, rndm, pd);
+        //  creazioneManutenzione(mtd, mzd, rndm);
+        //  creaControlloTratta(cd, mzd, rndm);
         try {
             while (b) {
                 Scanner scanner = new Scanner(System.in);
