@@ -57,7 +57,6 @@ public class Tratta {
                 "trattaID=" + trattaID +
                 ", partenza='" + partenza + '\'' +
                 ", destinazione='" + destinazione + '\'' +
-                ", trasporti=" + trasporti +
                 '}';
     }
 }

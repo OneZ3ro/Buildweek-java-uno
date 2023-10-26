@@ -1,12 +1,18 @@
 package DAO;
 
-
+import entities.Biglietto;
 import entities.DocumentoVendita;
+import entities.PuntoVendita;
+import entities.Tessera;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.TypedQuery;
+import javax.print.Doc;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 public class DocumentoVenditaDAO {
@@ -22,38 +28,59 @@ public class DocumentoVenditaDAO {
         return em.find(DocumentoVendita.class, id);
     }
 
-    public void controlloAbbonamento() {
-       /* try {
-            TypedQuery<DocumentoVendita> query = em.createQuery("SELECT ts FROM Tessera ts WHERE ts.documentoVenditaId = :idTessera", DocumentoVendita.class);
-            Query query2 = em.createQuery("SELECT ts.dataDiScadenza FROM Tessera ts WHERE ts.documentoVenditaId = :idTessera", DocumentoVendita.class);
-
-
-            query.setParameter("idTessera", id);
-            query2.setParameter("idTessera", id);
+    public void controlloAbbonamento(String id) {
+        UUID idTessera = UUID.fromString(id);
+        try {
+            TypedQuery<DocumentoVendita> query = em.createQuery(
+                    "SELECT ts FROM Tessera ts WHERE ts.documentoVenditaId = :idTessera", DocumentoVendita.class);
+            query.setParameter("idTessera", idTessera);
             Object result = query.getSingleResult();
-            SimpleDateFormat sdformat = new SimpleDateFormat("yyyy-MM-dd");
+            System.out.println(result);
+            if (result != null) {
+                SimpleDateFormat sdformat = new SimpleDateFormat("yyyy-MM-dd");
+                Query query2 = em.createQuery(
+                        "SELECT ts.dataDiScadenza FROM Tessera ts WHERE ts.documentoVenditaId = :idTessera",
+                        LocalDate.class);
+                query2.setParameter("idTessera", idTessera);
+                LocalDate result2 = (LocalDate) query2.getSingleResult();
 
-            if (result == null) {
-                System.out.println("Non è stato possibile trovare il Documento con N:" + " " + id + "!!");
-            } else {
-                String result2 = (String) query2.getSingleResult();
-
-                Date todayDate = sdformat.parse(sdformat.format(new Date()));
-                Date d1 = sdformat.parse(result2);
-                if (d1.compareTo(todayDate) > 0) {
-                    System.out.println("La tessera N:" + " " + id + " " + "è scaduta il:" + " " + d1);
+                if (result2.isBefore(LocalDate.now())) {
+                    System.out.println("La tessera N:" + " " + id + " " + "è scaduta il: " + result2);
                 } else {
-                    System.out.println("Tessera ancora in corso di valisità, scade il:" + " " + d1);
+                    System.out.println("Tessera ancora in corso di validità, scade il: " + result2);
                 }
-
             }
         } catch (Exception e) {
             System.out.println("Errore nel caricamento dati: " + e.getMessage());
-        }*/
+        }
         LocalDate oggi = LocalDate.now();
-        TypedQuery<DocumentoVendita> query = em.createQuery("SELECT ts FROM Tessera ts WHERE ts.dataDiScadenza < CURRENT_DATE", DocumentoVendita.class);
-        //query.setParameter("oggi", oggi);
+        TypedQuery<DocumentoVendita> query = em.createQuery(
+                "SELECT ts FROM Tessera ts WHERE ts.dataDiScadenza < CURRENT_DATE", DocumentoVendita.class);
+        // query.setParameter("oggi", oggi);
         query.getResultList().forEach(System.out::println);
+    }
+
+    public void convalidaBiglietto(UUID id) {
+        try {
+            Query query = em.createQuery(
+                    "UPDATE biglietto SET biglietto.dataDiConvalidazione = CURRENT_DATE " +
+                            "WHERE biglietto.documentoVenditaId = :id");
+            query.setParameter(":id", id);
+            int updateCount = query.executeUpdate();
+            System.out.println("Convalidazine avvenuta con successo");
+        } catch (Exception e) {
+            System.out.println("Oops c'è statoo un'errore nella convalidazione...");
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public List<DocumentoVendita> dammiDocumentiVenditaPerData(String idPuntoVendita, LocalDate data) {
+        UUID idPuntoVenditaS = UUID.fromString(idPuntoVendita);
+        TypedQuery<DocumentoVendita> query = em.createQuery("SELECT dv FROM DocumentoVendita dv " +
+                "WHERE dv.dataDiRilascio = :date and dv.puntoVendita.puntoVenditaId = :puntoVendita",
+                DocumentoVendita.class);
+        query.setParameter("date", data).setParameter("puntoVendita", idPuntoVenditaS);
+        return query.getResultList();
     }
 
     public void save(DocumentoVendita dv) {

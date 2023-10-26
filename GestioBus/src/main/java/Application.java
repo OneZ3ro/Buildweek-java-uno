@@ -10,10 +10,9 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import java.time.LocalDate;
+import java.time.Year;
 import java.util.*;
 import java.time.LocalDateTime;
-
-
 
 public class Application {
     private static final EntityManagerFactory emf = Persistence.createEntityManagerFactory("connections");
@@ -30,125 +29,116 @@ public class Application {
         Faker faker = new Faker(new Locale("ITALY"));
         Random rndm = new Random();
 
-       /* creazioneUtente(ud, faker, rndm);
-        creazioneTratta(td, faker, rndm);
-        creazioneMezzoDiTrasporto(mzd, td, rndm);
-        creazionePuntoVedita(pd, faker, rndm);
-        creazioneDocumentoVendita(dd, ud, mzd, rndm); //nella parte di creazione
-        //della tessera che cos'è dataDiEmissione e cosa cambia con dataDiRilascio
-        creazioneManutenzione(mtd, mzd, rndm);
+        dd.controlloAbbonamento("da00f72f-c127-4068-a371-07a4dfad1d7c");
 
-        LocalDateTime t = LocalDateTime.now();
+        System.out.println("hell world");
+        // creazioneUtente(ud, faker, rndm);
+        // creazioneTratta(td, faker, rndm);
+        // creazioneMezzoDiTrasporto(mzd, td, rndm);
+        // creazionePuntoVedita(pd, faker, rndm);
+        // creazioneDocumentoVendita(dd, ud, mzd, rndm, pd);
+        // creazioneManutenzione(mtd, mzd, rndm);
 
-        String s = t.getHour() + ":" + t.getMinute();
-        System.out.println(s);
-
-
-        creazioneManutenzione(mtd, mzd, rndm);*/
-        
-        try {
-            while (b) {
-                Scanner scanner = new Scanner(System.in);
-                System.out.println("0: to exit");
-                System.out.println("1: Amministazione");
-                System.out.println("2: Utente");
-                try {
-                    int choice = Integer.parseInt(scanner.nextLine());
-                    switch (choice) {
-                        case 0:
-                            System.out.println("HAI SCELTO DI USCIRE");
-                            b = false;
-                            break;
-                        case 1:
-                            System.out.println("Hai scelto Amministrazione");
-                            System.out.println("CHE SERVIZIO");
-                            System.out.println(
-                                    "0: Torna indietro, 1:Manuetenzione, 2:Controllo mezzo 3:Verifica abbonamento");
-                            int choiceAdmin = Integer.parseInt(scanner.nextLine());
-                            switch (choiceAdmin) {
-                                case 0: {
-                                    System.out.println("hai scelto di tornare indietro");
-                                    break;
-                                }
-                                case 1: {
-                                    System.out.println("hai scelto manutenzione");
-                                    // ISTRUZIONI DA FARE IN MANUTENZIONE
-                                    break;
-                                }
-                                case 2: {
-                                    System.out.println("hai scelto controllo mezzo");
-                                    System.out.println("CHE SERVIZIO");
-                                    System.out.println("0: Torna indietro, 1:Per data, 2: Per mezzo");
-                                    int choiceAdminMezzo = Integer.parseInt(scanner.nextLine());
-                                    switch (choiceAdminMezzo) {
-                                        case 0: {
-                                            System.out.println("hai scelto di tornare indietro");
-                                            break;
-                                        }
-                                        case 1: {
-                                            System.out.println("hai scelto Per data: inserisci la data");
-                                            String choiceData = scanner.nextLine();
-                                            // ISTRUZIONI DA FARE IN INSERISCI DATA PER RICERCA
-                                            break;
-                                        }
-                                        case 2: {
-                                            System.out.println("hai scelto Per mezzo: inserisci il Mezzo");
-                                            String choiceMezzo = scanner.nextLine();
-                                            // ISTRUZIONI DA FARE IN INSERISCI DATA PER RICERCA
-                                            break;
-                                        }
-                                    }
-                                    // ISTRUZIONI DA FARE IN MANUTENZIONE
-                                    break;
-                                }
-                            }
-                            break;
-                        case 2:
-                            System.out.println("Hai scelto Utente");
-                            System.out.println("CHE SERVIZIO");
-                            System.out
-                                    .println("0: Torna indietro, 1:Convalida, 2:Acquisto biglietto 3:crea abbonamento,4:Rinnova Abbonamento");
-                            int choiceUser = Integer.parseInt(scanner.nextLine());
-                            switch (choiceUser) {
-                                case 0: {
-                                    System.out.println("hai scelto di tornare indietro");
-                                    break;
-                                }
-                                case 1: {
-                                    System.out.println("hai scelto Convalida");
-                                    break;
-                                }
-                                case 2: {
-                                    System.out.println("hai scelto Acquisto biglietto");
-                                    break;
-                                }
-                                case 3: {
-                                    System.out.println("hai scelto crea abbonamento");
-                                    break;
-                                }
-                                case 4: {
-                                    System.out.println("hai scelto rinnova abbonamento");
-
-                                    break;
-                                }
-                            }
-                            break;
-                        default:
-                            System.out.println("Inserisci un campo valido!");
-                            choice = Integer.parseInt(scanner.nextLine());
-                            break;
-                    }
-                } catch (Exception ex) {
-                    System.out.println("Devi inserire un campo valido!");
-                }
-            }
-
-        } catch (Exception ex) {
-            System.err.println(ex.getMessage());
-        } finally {
-            em.close();
-            emf.close();
-        }
+        // try {
+        // while (b) {
+        // Scanner scanner = new Scanner(System.in);
+        // System.out.println("0: to exit");
+        // System.out.println("1: Amministazione");
+        // System.out.println("2: Utente");
+        // try {
+        // int choice = Integer.parseInt(scanner.nextLine());
+        // switch (choice) {
+        // case 0:
+        // System.out.println("HAI SCELTO DI USCIRE");
+        // b = false;
+        // break;
+        // case 1:
+        // System.out.println("Hai scelto Amministrazione");
+        // System.out.println("CHE SERVIZIO");
+        // System.out.println(
+        // "0: Torna indietro, 1:Manuetenzione, 2:Controllo mezzo 3:Verifica
+        // abbonamento");
+        // int choiceAdmin = Integer.parseInt(scanner.nextLine());
+        // switch (choiceAdmin) {
+        // case 0: {
+        // System.out.println("hai scelto di tornare indietro");
+        // break;
+        // }
+        // case 1: {
+        // System.out.println("hai scelto manutenzione");
+        // // ISTRUZIONI DA FARE IN MANUTENZIONE
+        // break;
+        // }
+        // case 2: {
+        // System.out.println("hai scelto controllo mezzo");
+        // System.out.println("CHE SERVIZIO");
+        // System.out.println("0: Torna indietro, 1:Per data, 2: Per mezzo");
+        // int choiceAdminMezzo = Integer.parseInt(scanner.nextLine());
+        // switch (choiceAdminMezzo) {
+        // case 0: {
+        // System.out.println("hai scelto di tornare indietro");
+        // break;
+        // }
+        // case 1: {
+        // System.out.println("hai scelto Per data: inserisci la data");
+        // String choiceData = scanner.nextLine();
+        // // ISTRUZIONI DA FARE IN INSERISCI DATA PER RICERCA
+        // break;
+        // }
+        // case 2: {
+        // System.out.println("hai scelto Per mezzo: inserisci il Mezzo");
+        // String choiceMezzo = scanner.nextLine();
+        // // ISTRUZIONI DA FARE IN INSERISCI DATA PER RICERCA
+        // break;
+        // }
+        // }
+        // // ISTRUZIONI DA FARE IN MANUTENZIONE
+        // break;
+        // }
+        // }
+        // break;
+        // case 2:
+        // System.out.println("Hai scelto Utente");
+        // System.out.println("CHE SERVIZIO");
+        // System.out
+        // .println("0: Torna indietro, 1:Convalida, 2:Acquisto biglietto 3:crea
+        // abbonamento");
+        // int choiceUser = Integer.parseInt(scanner.nextLine());
+        // switch (choiceUser) {
+        // case 0: {
+        // System.out.println("hai scelto di tornare indietro");
+        // break;
+        // }
+        // case 1: {
+        // System.out.println("hai scelto Convalida");
+        // break;
+        // }
+        // case 2: {
+        // System.out.println("hai scelto Acquisto biglietto");
+        // break;
+        // }
+        // case 3: {
+        // System.out.println("hai scelto crea abbonamento");
+        // break;
+        // }
+        // }
+        // break;
+        // default:
+        // System.out.println("You need to enter one of the controls above");
+        // choice = Integer.parseInt(scanner.nextLine());
+        // break;
+        // }
+        // } catch (Exception ex) {
+        // System.out.println("you must enter one of the appropriate controls");
+        // }
+        // }
+        //
+        // } catch (Exception ex) {
+        // System.err.println(ex.getMessage());
+        // } finally {
+        // em.close();
+        // emf.close();
+        // }
     }
 
     public static String creaRandomData() {
@@ -228,7 +218,9 @@ public class Application {
         for (int i = 0; i < 50; i++) {
             int n = rndm.nextInt(0, 1001);
             if (n % 2 == 0) {
-                PuntoVendita puntoVendita = new Distributore(faker.gameOfThrones().character(), faker.country().capital(), n % 3 == 0 ? StatoDistributore.ATTIVO : StatoDistributore.FUORI_SERVIZIO);
+                PuntoVendita puntoVendita = new Distributore(faker.gameOfThrones().character(),
+                        faker.country().capital(),
+                        n % 3 == 0 ? StatoDistributore.ATTIVO : StatoDistributore.FUORI_SERVIZIO);
                 pd.save(puntoVendita);
             } else {
                 PuntoVendita puntoVendita = new Rivenditore(faker.gameOfThrones().character(),
@@ -238,18 +230,21 @@ public class Application {
         }
     }
 
-    
-    public static void creazioneDocumentoVendita(DocumentoVenditaDAO dd, UtenteDAO ud, MezzoTraspDAO mzd, Random rndm) {
+    public static void creazioneDocumentoVendita(DocumentoVenditaDAO dd, UtenteDAO ud, MezzoTraspDAO mzd, Random rndm,
+            PuntoVenditaDAO pd) {
+
         for (int i = 0; i < 50; i++) {
             int n = rndm.nextInt(0, 1001);
             LocalDate dataDiRilascio = LocalDate.parse(creaRandomData());
             if (n % 2 == 0) {
                 DocumentoVendita documentoVendita = new Biglietto(dataDiRilascio,
+                        pd.getAllPuntiVendita().get(rndm.nextInt(0, pd.getAllPuntiVendita().size())),
                         n % 3 == 0 ? null : dataDiRilascio.plusDays(rndm.nextInt(10, 40)),
                         mzd.getAllMezziDiTrasporti().get(rndm.nextInt(0, mzd.getAllMezziDiTrasporti().size())));
                 dd.save(documentoVendita);
             } else {
                 DocumentoVendita documentoVendita = new Tessera(dataDiRilascio,
+                        pd.getAllPuntiVendita().get(rndm.nextInt(0, pd.getAllPuntiVendita().size())),
                         ud.getAllUtenti().get(i),
                         n % 3 == 0 ? TipoAbbonamento.MENSILE : TipoAbbonamento.SETTIMANALE, dataDiRilascio);
                 dd.save(documentoVendita);
@@ -258,10 +253,12 @@ public class Application {
     }
 
     public static void creazioneManutenzione(ManutenzioneDAO mtd, MezzoTraspDAO mzd, Random rndm) {
-        String[] app = {"Cambio vetri", "Riparazione freni", "Cambio olio"};
+        String[] app = { "Cambio vetri", "Riparazione freni", "Cambio olio" };
         for (int i = 0; i < rndm.nextInt(50, 101); i++) {
             LocalDate dataInizio = LocalDate.parse(creaRandomData());
-            Manutenzione manutenzione = new Manutenzione(dataInizio, dataInizio.plusDays(rndm.nextInt(3, 201)), mzd.getAllMezziDiTrasporti().get(rndm.nextInt(0, mzd.getAllMezziDiTrasporti().size())), app[rndm.nextInt(0, app.length)]);
+            Manutenzione manutenzione = new Manutenzione(dataInizio, dataInizio.plusDays(rndm.nextInt(3, 201)),
+                    mzd.getAllMezziDiTrasporti().get(rndm.nextInt(0, mzd.getAllMezziDiTrasporti().size())),
+                    app[rndm.nextInt(0, app.length)]);
             mtd.save(manutenzione);
         }
     }

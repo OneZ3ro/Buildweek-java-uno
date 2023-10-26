@@ -76,13 +76,11 @@ public class MezzoDiTrasporto {
 
     @Override
     public String toString() {
-        return "MezzoDiTrasporto{" +
-                "mezzoDiTrasportoId=" + mezzoDiTrasportoId +
+        return "{ mezzoDiTrasportoId=" + mezzoDiTrasportoId +
                 ", tipoDiMezzo=" + tipoDiMezzo +
                 ", capienza=" + capienza +
                 ", stato=" + stato +
                 ", tratta=" + tratta +
-                ", manutenzioni=" + manutenzioni +
                 '}';
     }
 }

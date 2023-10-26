@@ -35,6 +35,25 @@ public class MezzoTraspDAO {
       throw e;
     }
   }
+//  public  List<MezzoDiTrasporto> listaManutenzioniMezzo(UUID idMezzo) {
+//    try {
+//      TypedQuery<MezzoDiTrasporto> getResultQuery = em.createQuery("SELECT mt.stato FROM MezzoDiTrasporto mt WHERE mt.mezzoDiTrasportoId = :idMezzo", MezzoDiTrasporto.class);
+//      getResultQuery.setParameter("idMezzo", idMezzo);
+//      Object result = getResultQuery.getSingleResult();
+//      if (result == null) {
+//        System.out.println("Ci dispiace l'id inserito è errato");
+//      } else {
+//        System.out.println(result);
+//      }
+//
+//    } catch (Exception e) {
+//      System.out.println("There was an error loading data");
+//      throw e;
+//    }
+//    return null;
+//  }
+
+
 
   public void save(MezzoDiTrasporto MezzoDiTrasporto) {
       EntityTransaction trc = em.getTransaction();

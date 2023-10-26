@@ -19,8 +19,9 @@ public class Tessera extends DocumentoVendita {
     public Tessera() {
     }
 
-    public Tessera(LocalDate dataDiRilascio, Utente utente, TipoAbbonamento tipoAbbonamento, LocalDate dataDiRinnovo) {
-        super(dataDiRilascio);
+    public Tessera(LocalDate dataDiRilascio, PuntoVendita puntoVendita, Utente utente, TipoAbbonamento tipoAbbonamento,
+            LocalDate dataDiRinnovo) {
+        super(dataDiRilascio, puntoVendita);
         this.utente = utente;
         this.tipoAbbonamento = tipoAbbonamento;
         this.dataDiScadenza = dataDiRinnovo.plusYears(1);
@@ -66,11 +67,10 @@ public class Tessera extends DocumentoVendita {
     @Override
     public String toString() {
         return "Tessera{" +
-                //"utente=" + utente +
+        // "utente=" + utente.getNome() +
                 ", tipoAbbonamento=" + tipoAbbonamento +
                 ", dataDiScadenza=" + dataDiScadenza +
                 ", dataDiRinnovo=" + dataDiRinnovo +
-                ", active=" + active +
                 '}';
     }
 }

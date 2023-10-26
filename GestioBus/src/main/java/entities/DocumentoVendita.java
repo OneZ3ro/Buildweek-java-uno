@@ -14,17 +14,20 @@ public abstract class DocumentoVendita {
     private UUID documentoVenditaId;
     private LocalDate dataDiRilascio;
 
-    @ManyToMany
-    @JoinTable(name = "puntovendita_documentovendita", joinColumns = @JoinColumn(name = "documento_vendita_id"), inverseJoinColumns = @JoinColumn(name = "punto_vendita_id"))
-    private List<PuntoVendita> listaPuntiVendita;
+    @ManyToOne
+    @JoinColumn(name = "punto_vendita_id")
+    private PuntoVendita puntoVendita;
 
     public DocumentoVendita() {
     }
 
-    ;
+    public void setDocumentoVenditaId(UUID documentoVenditaId) {
+        this.documentoVenditaId = documentoVenditaId;
+    }
 
-    public DocumentoVendita(LocalDate dataDiRilascio) {
+    public DocumentoVendita(LocalDate dataDiRilascio, PuntoVendita puntoVendita) {
         this.dataDiRilascio = dataDiRilascio;
+        this.puntoVendita = puntoVendita;
     }
 
     public UUID getDocumentoVenditaId() {
@@ -39,12 +42,12 @@ public abstract class DocumentoVendita {
         this.dataDiRilascio = dataDiRilascio;
     }
 
-    public List<PuntoVendita> getListaPuntiVendita() {
-        return listaPuntiVendita;
+    public PuntoVendita getPuntoVendita() {
+        return puntoVendita;
     }
 
-    public void setListaPuntiVendita(List<PuntoVendita> listaPuntiVendita) {
-        this.listaPuntiVendita = listaPuntiVendita;
+    public void setPuntoVendita(PuntoVendita puntoVendita) {
+        this.puntoVendita = puntoVendita;
     }
 
     @Override
@@ -52,7 +55,6 @@ public abstract class DocumentoVendita {
         return "DocumentoVendita{" +
                 "documentoVenditaId=" + documentoVenditaId +
                 ", dataDiRilascio=" + dataDiRilascio +
-                ", listaPuntiVendita=" + listaPuntiVendita +
                 '}';
     }
 }

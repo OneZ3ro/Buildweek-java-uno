@@ -13,8 +13,7 @@ public abstract class PuntoVendita {
     private UUID puntoVenditaId;
     private String nome;
     private String citta;
-    @ManyToMany
-    @JoinTable(name = "puntovendita_documentovendita", joinColumns = @JoinColumn(name = "punto_vendita_id"), inverseJoinColumns = @JoinColumn(name = "documento_vendita_id"))
+    @OneToMany(mappedBy = "puntoVendita")
     private List<DocumentoVendita> documentoVendite;
 
     public PuntoVendita() {
@@ -55,7 +54,6 @@ public abstract class PuntoVendita {
                 "puntoVenditaId=" + puntoVenditaId +
                 ", nome='" + nome + '\'' +
                 ", citta='" + citta + '\'' +
-                ", listaPuntiVendita=" + documentoVendite +
                 '}';
     }
 }
