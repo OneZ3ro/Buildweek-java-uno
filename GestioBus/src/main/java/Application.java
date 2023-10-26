@@ -32,24 +32,26 @@ public class Application {
 
 //        System.out.println("hello world");
 
-//        creazioneUtente(ud, faker, rndm);
-//        creazioneTratta(td, faker, rndm);
-//        creazioneMezzoDiTrasporto(mzd, td, rndm);
-//        creazionePuntoVedita(pd, faker, rndm);
-//        creazioneDocumentoVendita(dd, ud, mzd, rndm, pd);
-//        creazioneManutenzione(mtd, mzd, rndm);
-//        creaControlloTratta(cd, mzd, rndm);
+        creazioneUtente(ud, faker, rndm);
+        creazioneTratta(td, faker, rndm);
+        creazioneMezzoDiTrasporto(mzd, td, rndm);
+        creazionePuntoVedita(pd, faker, rndm);
+        creazioneDocumentoVendita(dd, ud, mzd, rndm, pd);
+        creazioneManutenzione(mtd, mzd, rndm);
+        creaControlloTratta(cd, mzd, rndm);
 
 //        mtd.listaManutenzioneMezzi("0b378bcb-c0cf-4619-8bc6-833c007f9de5").forEach(System.out::println);
 //
 //        mzd.getContaTratte("332f4b16-8230-48f2-90d3-492f6b25859c");
-        MezzoDiTrasporto mezzoDiTrasporto = mzd.getById(UUID.fromString("276f2034-5560-45fc-8895-6d08557c0b86"));
-        List<Biglietto> bigliettoList = mezzoDiTrasporto.getBigliettoList();
-        for (int i = 0; i < bigliettoList.size(); i++) {
-            if (bigliettoList.get(i).getDataDiConvalidazione() != null) {
-                System.out.println(bigliettoList.get(i));
-            }
-        }
+//        MezzoDiTrasporto mezzoDiTrasporto = mzd.getById(UUID.fromString("276f2034-5560-45fc-8895-6d08557c0b86"));
+//        List<Biglietto> bigliettoList = mezzoDiTrasporto.getBigliettoList();
+//        List<Biglietto> app = new ArrayList<>();
+//        for (int i = 0; i < bigliettoList.size(); i++) {
+//            LocalDate current = bigliettoList.get(i).getDataDiConvalidazione();
+//            if (bigliettoList.get(i).getDataDiConvalidazione() != null) {
+//                System.out.println(bigliettoList.get(i));
+//            }
+//        }
         try {
             while (b) {
                 Scanner scanner = new Scanner(System.in);
@@ -421,14 +423,21 @@ public class Application {
 
     public static void creazioneManutenzione(ManutenzioneDAO mtd, MezzoTraspDAO mzd, Random rndm) {
         String[] app = {"Cambio vetri", "Riparazione freni", "Cambio olio"};
+        List<MezzoDiTrasporto> mezzoDiTrasportoList = new ArrayList<>();
         for (int i = 0; i < rndm.nextInt(50, 101); i++) {
             MezzoDiTrasporto mezzoDiTrasporto = mzd.getAllMezziDiTrasporti().get(rndm.nextInt(0, mzd.getAllMezziDiTrasporti().size()));
             LocalDate dataInizio = mezzoDiTrasporto.getDataDiImmatricolazione();
             if (mezzoDiTrasporto.getStato() != Stato.IN_SERVIZIO) {
-                Manutenzione manutenzione = new Manutenzione(dataInizio.plusDays(rndm.nextInt(3, 101)), dataInizio.plusDays(rndm.nextInt(101, 201)),
-                        mezzoDiTrasporto,
-                        app[rndm.nextInt(0, app.length)]);
-                mtd.save(manutenzione);
+                if (!mezzoDiTrasportoList.contains(mezzoDiTrasporto)) {
+                    Manutenzione manutenzione = new Manutenzione(dataInizio.plusDays(rndm.nextInt(3, 101)), dataInizio.plusDays(rndm.nextInt(101, 201)),
+                            mezzoDiTrasporto,
+                            app[rndm.nextInt(0, app.length)]);
+                    mtd.save(manutenzione);
+                } else {
+                    Manutenzione manutenzione = new Manutenzione(mtd.getFineData(mezzoDiTrasporto.getMezzoDiTrasportoId()).plusDays(rndm.nextInt(30, 101)), mtd.getFineData(mezzoDiTrasporto.getMezzoDiTrasportoId()).plusDays(rndm.nextInt(101, 201)), mezzoDiTrasporto, app[rndm.nextInt(0, app.length)]);
+                    mtd.save(manutenzione);
+                }
+                mezzoDiTrasportoList.add(mezzoDiTrasporto);
             }
         }
     }

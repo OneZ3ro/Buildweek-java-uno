@@ -16,21 +16,23 @@ public class ManutenzioneDAO {
         this.em = em;
     }
 
-    public void periodiServiziMezzo (String idMezzo){
+    public void periodiServiziMezzo(String idMezzo) {
         UUID idConvertito = UUID.fromString(idMezzo);
         TypedQuery<LocalDate> query = em.createQuery("SELECT DISTINCT bl.dataDiConvalidazione FROM Biglietto bl " +
-                "WHERE mezzoDiTrasporto.mezzoDiTrasportoId = :idMezzo and bl.dataDiConvalidazione IS NOT NULL", LocalDate.class);
+                "WHERE mezzoDiTrasporto.mezzoDiTrasportoId = :idMezzo and bl.dataDiConvalidazione IS NOT NULL",
+                LocalDate.class);
         query.setParameter("idMezzo", idConvertito);
 
-        query.getResultList().forEach(System.out::println);}
-
+        query.getResultList().forEach(System.out::println);
+    }
 
     public List<Manutenzione> listaManutenzioneMezzi(String mezzoId) {
         UUID idConvertito = UUID.fromString(mezzoId);
 
-        TypedQuery<Manutenzione> query = em.createQuery("SELECT mm FROM Manutenzione mm WHERE mm.mezzoDiTrasporto.mezzoDiTrasportoId = :mezzoId ", Manutenzione.class);
+        TypedQuery<Manutenzione> query = em.createQuery(
+                "SELECT mm FROM Manutenzione mm WHERE mm.mezzoDiTrasporto.mezzoDiTrasportoId = :mezzoId ",
+                Manutenzione.class);
         query.setParameter("mezzoId", idConvertito);
-
 
         return query.getResultList();
     }
@@ -74,13 +76,15 @@ public class ManutenzioneDAO {
     }
 
     public List<Manutenzione> getAllManutenzioni() {
-        TypedQuery<Manutenzione> getAllManutenzioniQuery = em.createQuery("SELECT m FROM Manutenzione m", Manutenzione.class);
+        TypedQuery<Manutenzione> getAllManutenzioniQuery = em.createQuery("SELECT m FROM Manutenzione m",
+                Manutenzione.class);
         return getAllManutenzioniQuery.getResultList();
     }
 
     public List<Manutenzione> getAllManutenzioniPerMezzo(String mId) {
         UUID id = UUID.fromString(mId);
-        TypedQuery<Manutenzione> getAllManutenzioniPerMezzoQuery = em.createQuery("SELECT m FROM Manutenzione m WHERE m.mezzoDiTrasporto.mezzoDiTrasportoId=:id", Manutenzione.class);
+        TypedQuery<Manutenzione> getAllManutenzioniPerMezzoQuery = em.createQuery(
+                "SELECT m FROM Manutenzione m WHERE m.mezzoDiTrasporto.mezzoDiTrasportoId=:id", Manutenzione.class);
         getAllManutenzioniPerMezzoQuery.setParameter("id", id);
         return getAllManutenzioniPerMezzoQuery.getResultList();
     }
@@ -95,4 +99,13 @@ public class ManutenzioneDAO {
         transaction.commit();
         System.out.println("Data aggiornata");
     }
+
+    public LocalDate getFineData(UUID id) {
+        TypedQuery<LocalDate> localDateTypedQuery = em.createQuery(
+                "SELECT DISTINCT m.dataFine FROM Manutenzione m WHERE m.mezzoDiTrasporto.mezzoDiTrasportoId = :id",
+                LocalDate.class);
+        localDateTypedQuery.setParameter("id", id);
+        return localDateTypedQuery.getSingleResult();
+    }
+
 }

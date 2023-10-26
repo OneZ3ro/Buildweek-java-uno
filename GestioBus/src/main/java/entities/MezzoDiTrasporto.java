@@ -96,6 +96,11 @@ public class MezzoDiTrasporto {
         return manutenzioni;
     }
 
+//    public Manutenzione getManutenzione(UUID id) {
+//        List<Manutenzione> manutenzioneList = manutenzioni.stream().filter(manutenzione -> manutenzione.getMezzoDiTrasporto().getMezzoDiTrasportoId().equals(id)).toList();
+//        return manutenzioneList.get(0);
+//    }
+
     public LocalDate getDataDiImmatricolazione() {
         return dataDiImmatricolazione;
     }

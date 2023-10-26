@@ -2,7 +2,6 @@ package entities;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -21,10 +20,6 @@ public abstract class DocumentoVendita {
     public DocumentoVendita() {
     }
 
-    public void setDocumentoVenditaId(UUID documentoVenditaId) {
-        this.documentoVenditaId = documentoVenditaId;
-    }
-
     public DocumentoVendita(LocalDate dataDiRilascio, PuntoVendita puntoVendita) {
         this.dataDiRilascio = dataDiRilascio;
         this.puntoVendita = puntoVendita;
@@ -32,6 +27,10 @@ public abstract class DocumentoVendita {
 
     public UUID getDocumentoVenditaId() {
         return documentoVenditaId;
+    }
+
+    public void setDocumentoVenditaId(UUID documentoVenditaId) {
+        this.documentoVenditaId = documentoVenditaId;
     }
 
     public LocalDate getDataDiRilascio() {
@@ -57,4 +56,5 @@ public abstract class DocumentoVendita {
                 ", dataDiRilascio=" + dataDiRilascio +
                 '}';
     }
+
 }
