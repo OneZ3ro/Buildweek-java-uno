@@ -26,6 +26,12 @@ public class Manutenzione {
         this.descrizione = descrizione;
     }
 
+    public Manutenzione(MezzoDiTrasporto mezzoDiTrasporto, String descrizione) {
+        this.dataInizio = LocalDate.now();
+        this.mezzoDiTrasporto = mezzoDiTrasporto;
+        this.descrizione = descrizione;
+    }
+
     public LocalDate getDataInizio() {
         return dataInizio;
     }
@@ -38,8 +44,8 @@ public class Manutenzione {
         return dataFine;
     }
 
-    public void setDataFine(LocalDate dataFine) {
-        this.dataFine = dataFine;
+    public void setDataFine() {
+        this.dataFine = LocalDate.now();
     }
 
     public UUID getManutenzioneId() {

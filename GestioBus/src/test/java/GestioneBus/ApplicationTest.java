@@ -1,4 +1,4 @@
-package GestioneBus-Team6;
+package GestioneBus;
 
 import org.junit.jupiter.api.Test;
 

@@ -30,36 +30,30 @@ public class Application {
         Faker faker = new Faker(new Locale("ITALY"));
         Random rndm = new Random();
 
-        dd.bigliettiVidimatiPerPeriodo("2dff96c3-cb0e-446f-904f-dc803143ae30", LocalDate.parse("2023-01-09"), LocalDate.parse("2024-01-09"));
 
-        System.out.println("hello world");
-        /*creazioneUtente(ud, faker, rndm);
+        creazioneUtente(ud, faker, rndm);
         creazioneTratta(td, faker, rndm);
         creazioneMezzoDiTrasporto(mzd, td, rndm);
         creazionePuntoVedita(pd, faker, rndm);
         creazioneDocumentoVendita(dd, ud, mzd, rndm, pd);
         creazioneManutenzione(mtd, mzd, rndm);
         creaControlloTratta(cd, mzd, rndm);
-
-         */
-        mzd.getContaTratte("332f4b16-8230-48f2-90d3-492f6b25859c");
         try {
             while (b) {
                 Scanner scanner = new Scanner(System.in);
-                System.out.println("0: to exit");
-                System.out.println("1: Amministazione");
-                System.out.println("2: Utente");
+                System.out.println("0: Esci: 1: Amministazione, 2: Rinnovo Abbonamento");
                 try {
                     int choice = Integer.parseInt(scanner.nextLine());
                     switch (choice) {
-                        case 0:
+                        case 0: {
                             System.out.println("HAI SCELTO DI USCIRE");
                             b = false;
                             break;
-                        case 1:
-                            System.out.println("Hai scelto Amministrazione");
-                            System.out.println("CHE SERVIZIO");
-                            System.out.println("0: Torna indietro, 1:Manuetenzione, 2:Controllo mezzo 3:Verifica abbonamento");
+                        }
+                        case 1: {
+                            System.out.println("Hai scelto Amministrazione, che servizio?");
+                            System.out.println("0: Torna indietro, 1:Manuetenzione, 2:Mezzo 3:Verifica abbonamento");
+                            System.out.println("4: Aggiungi rivenditore affiliato, 5: Documenti viaggio da punto vendita");
                             int choiceAdmin = Integer.parseInt(scanner.nextLine());
                             switch (choiceAdmin) {
                                 case 0: {
@@ -68,13 +62,52 @@ public class Application {
                                 }
                                 case 1: {
                                     System.out.println("hai scelto manutenzione");
-                                    //ISTRUZIONI DA FARE IN MANUTENZIONE
+                                    System.out.println("0: Torna indietro, 1:insesci nuava manutenzione su mezzo(per id mezzo)");
+                                    System.out.println("2: Cerca manutenzione attive su mezzo(per id mezzo)");
+                                    System.out.println("3: Fine lavori (per id mezzo)");
+                                    int choiceManu = Integer.parseInt(scanner.nextLine());
+                                    switch (choiceManu) {
+                                        case 0: {
+                                            System.out.println("hai scelto di tornare indietro");
+                                            break;
+                                        }
+                                        case 1: {
+                                            System.out.println("insesci nuova manutenzione su mezzo(per id mezzo)");
+                                            //MOSTRA TUTTI MEZZI PER COPIARE ID
+                                            mzd.getAllMezziDiTrasporti().forEach(System.out::println);
+                                            System.out.println("insesci id mezzo");
+                                            String s = scanner.nextLine();
+                                            MezzoDiTrasporto mezzo = mzd.getById(s);
+                                            System.out.println("insesci descrizione problema");
+                                            String descrizione = scanner.nextLine();
+                                            Manutenzione m = new Manutenzione(mezzo, descrizione);
+                                            mtd.save(m);
+                                            break;
+                                        }
+                                        case 2: {
+                                            System.out.println("Cerca manutenzione attive su mezzo(per id mezzo)");
+                                            mtd.getAllManutenzioni().forEach(manutenzione -> System.out.println("Manutenzione id: " + manutenzione.getManutenzioneId() +
+                                                    "TIPO: " + manutenzione.getMezzoDiTrasporto().getTipoDiMezzo() +
+                                                    " Mezzo ID : " + manutenzione.getMezzoDiTrasporto().getMezzoDiTrasportoId()));
+                                            System.out.println("insesci id mezzo");
+                                            String s = scanner.nextLine();
+                                            mtd.getAllManutenzioniPerMezzo(s).forEach(System.out::println);
+                                            break;
+                                        }
+                                        case 3: {
+                                            System.out.println("Hai scelto la fine dei lavori la data impostata di default sara oggi");
+                                            mtd.getAllManutenzioni().forEach(System.out::println);
+                                            System.out.println("insesci id manutenzione");
+                                            String s = scanner.nextLine();
+                                            mtd.uscitaMezzoManutenzione(s);
+                                        }
+                                    }
                                     break;
                                 }
                                 case 2: {
-                                    System.out.println("hai scelto controllo mezzo");
-                                    System.out.println("CHE SERVIZIO");
-                                    System.out.println("0: Torna indietro, 1:Per data, 2: Per mezzo");
+                                    System.out.println("hai scelto Mezzo");
+                                    System.out.println("0: Torna indietro, 1: Inserisci nuovo Mezzo, 2: Cerca veicoli in servizio");
+                                    System.out.println("3: Verifica biglietti su Mezzo, 4:Verifica tempi effittivi tratta");
                                     int choiceAdminMezzo = Integer.parseInt(scanner.nextLine());
                                     switch (choiceAdminMezzo) {
                                         case 0: {
@@ -82,24 +115,143 @@ public class Application {
                                             break;
                                         }
                                         case 1: {
-                                            System.out.println("hai scelto Per data: inserisci la data");
-                                            String choiceData = scanner.nextLine();
-                                            // ISTRUZIONI DA FARE IN INSERISCI DATA PER RICERCA
+                                            System.out.println("insesci nuovo mezzo ");
+                                            System.out.println("insesci tipo: 0:AUTOBUS 1:TRAM");
+                                            int i = Integer.parseInt(scanner.nextLine());
+                                            TipoDiMezzo tipo;
+                                            if (i == 0) {
+                                                tipo = TipoDiMezzo.AUTOBUS;
+                                            } else {
+                                                tipo = TipoDiMezzo.TRAM;
+                                            }
+                                            System.out.println("insesci capienza");
+                                            int capienza = Integer.parseInt(scanner.nextLine());
+                                            td.getAllTratte().forEach(System.out::println);
+                                            System.out.println("insesci l'id della tratta del nuovo mezzo");
+                                            String s = scanner.nextLine();
+                                            Tratta tratta = td.getById2(s);
+                                            MezzoDiTrasporto m = new MezzoDiTrasporto(tipo, capienza, tratta);
+                                            mzd.save(m);
                                             break;
                                         }
                                         case 2: {
-                                            System.out.println("hai scelto Per mezzo: inserisci il Mezzo");
-                                            String choiceMezzo = scanner.nextLine();
-                                            //ISTRUZIONI DA FARE IN INSERISCI DATA PER RICERCA
+                                            System.out.println("Elenco veicoli in servizio");
+                                            mzd.getTransportStatus();
+                                            /*
+                                            System.out.println("inserisci id mezzo ");
+                                            String s = scanner.nextLine();
+
+                                             */
+                                            break;
+                                        }
+                                        case 3: {
+                                            //MOSTRA TUTTI MEZZI PER COPIARE ID
+                                            mzd.getAllMezziDiTrasporti().forEach(System.out::println);
+                                            System.out.println("Verifica biglietti su Mezzo per data");
+                                            System.out.println("0: torna indietro, 1: Cerca per data, 2:Cerca per periodo, 3:Totale biglietti su mezzo");
+                                            int scelta = Integer.parseInt(scanner.nextLine());
+                                            switch (scelta) {
+                                                case 0: {
+                                                    System.out.println("hai scelto di tornare indietro");
+                                                    break;
+                                                }
+                                                case 1: {
+                                                    System.out.println("Cerca per data");
+                                                    System.out.println("insesci id mezzo da elenco soprastante");
+                                                    String s = scanner.nextLine();
+                                                    System.out.println("insesci data inizio");
+                                                    LocalDate ds = LocalDate.parse(scanner.nextLine());
+                                                    dd.bigliettiVidimatiPerData(s, ds);
+                                                    break;
+                                                }
+                                                case 2: {
+                                                    System.out.println("insesci id mezzo da elenco soprastante");
+                                                    String s = scanner.nextLine();
+                                                    System.out.println("insesci data inizio");
+                                                    LocalDate ds = LocalDate.parse(scanner.nextLine());
+                                                    System.out.println("insesci data fine");
+                                                    LocalDate df = LocalDate.parse(scanner.nextLine());
+                                                    dd.bigliettiVidimatiPerPeriodo(s, ds, df);
+                                                    break;
+                                                }
+                                                case 3: {
+                                                    System.out.println("insesci id mezzo da elenco soprastante");
+                                                    String s = scanner.nextLine();
+                                                    dd.totaleBigliettiVidimati(s);
+                                                }
+                                            }
+                                        }
+                                        case 4: {
+                                            System.out.println("Verifica tempi effittivi tratta");
+
                                             break;
                                         }
                                     }
                                     // ISTRUZIONI DA FARE IN MANUTENZIONE
                                     break;
                                 }
+                                case 3: {
+                                    System.out.println("Verifica abbonamento");
+                                    dd.getAllTessere();
+                                    System.out.println("Inserisci id abbonamento");
+                                    String s = scanner.nextLine();
+                                    dd.controlloAbbonamento(s);
+                                    break;
+                                }
+                                case 4: {
+                                    System.out.println("Inserisci nuovo Punto vendita");
+                                    System.out.println("0: Torna indietro, 1:Inserisci nuovo rivenditore, 2:Inserisci nuovo distributore automatico");
+                                    int scelta = Integer.parseInt(scanner.nextLine());
+                                    switch (scelta) {
+                                        case 0: {
+                                            System.out.println("hai scelto di tornare indietro");
+                                            break;
+                                        }
+                                        case 1: {
+                                            System.out.println("Inserisci nome");
+                                            String nome = scanner.nextLine();
+                                            System.out.println("Inserisci citta");
+                                            String citta = scanner.nextLine();
+                                            PuntoVendita p = new Rivenditore(nome, citta);
+                                            pd.save(p);
+                                            break;
+                                        }
+                                        case 2: {
+                                            System.out.println("Inserisci nome");
+                                            String nome = scanner.nextLine();
+                                            System.out.println("Inserisci citta");
+                                            String citta = scanner.nextLine();
+                                            System.out.println("inserisci stato: 0:IN SERVIZO, 1:FOURI SERVIZIO");
+                                            int s = Integer.parseInt(scanner.nextLine());
+                                            StatoDistributore stato;
+                                            if (s == 0) {
+                                                stato = StatoDistributore.ATTIVO;
+                                            } else {
+                                                stato = StatoDistributore.FUORI_SERVIZIO;
+                                            }
+                                            PuntoVendita p = new Distributore(nome, citta, stato);
+                                            pd.save(p);
+                                            break;
+                                        }
+                                    }
+                                    break;
+                                }
+                                case 5: {
+                                    System.out.println("Punti Vendita");
+                                    pd.getAllPuntiVendita().forEach(puntoVendita -> {
+                                        System.out.println("Id: " + puntoVendita.getPuntoVenditaId() + " nome: " + puntoVendita.getNome());
+                                    });
+                                    System.out.println("inserisci id Punto vendita");
+                                    String s = scanner.nextLine();
+                                    PuntoVendita pv = pd.getById(s);
+                                    dd.dammiDocumentiVenditaPerDataePv(pv.getPuntoVenditaId().toString()).forEach(System.out::println);
+
+                                    break;
+                                }
                             }
                             break;
-                        case 2:
+                        }
+                        case 2: {
                             System.out.println("Hai scelto Utente");
                             System.out.println("CHE SERVIZIO");
                             System.out.println("0: Torna indietro, 1:Convalida, 2:Acquisto biglietto 3:crea abbonamento");
@@ -123,6 +275,7 @@ public class Application {
                                 }
                             }
                             break;
+                        }
                         default:
                             System.out.println("You need to enter one of the controls above");
                             break;

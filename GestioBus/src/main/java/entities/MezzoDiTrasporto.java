@@ -42,6 +42,13 @@ public class MezzoDiTrasporto {
         this.contoTratte = contoTratte;
     }
 
+    public MezzoDiTrasporto(TipoDiMezzo tipoDiMezzo, long capienza, Tratta tratta) {
+        this.tipoDiMezzo = tipoDiMezzo;
+        this.capienza = capienza;
+        this.tratta = tratta;
+        this.stato = Stato.IN_SERVIZIO;
+    }
+
     public TipoDiMezzo getTipoDiMezzo() {
         return tipoDiMezzo;
     }
@@ -68,6 +75,10 @@ public class MezzoDiTrasporto {
 
     public UUID getMezzoDiTrasportoId() {
         return mezzoDiTrasportoId;
+    }
+
+    public void setMezzoDiTrasportoId(UUID mezzoDiTrasportoId) {
+        this.mezzoDiTrasportoId = mezzoDiTrasportoId;
     }
 
     public Stato getStato() {

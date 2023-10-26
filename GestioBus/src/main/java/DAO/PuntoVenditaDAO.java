@@ -11,6 +11,7 @@ import java.util.UUID;
 
 public class PuntoVenditaDAO {
     private final EntityManager em;
+
     public PuntoVenditaDAO(EntityManager em) {
         this.em = em;
     }
@@ -23,8 +24,14 @@ public class PuntoVenditaDAO {
         System.out.println("Nuovo puntoVendita creato correttamente");
     }
 
-    public PuntoVendita getById(UUID id) {
+    public PuntoVendita getById(String tId) {
+        UUID id = UUID.fromString(tId);
         return em.find(PuntoVendita.class, id);
+    }
+
+    public Tratta getById2(String tId) {
+        UUID id = UUID.fromString(tId);
+        return em.find(Tratta.class, id);
     }
 
     public void delete(UUID id) {
@@ -53,7 +60,7 @@ public class PuntoVenditaDAO {
         }
     }
 
-    public List<PuntoVendita> getAllPuntiVendita(){
+    public List<PuntoVendita> getAllPuntiVendita() {
         TypedQuery<PuntoVendita> getAllPuntiVenditaQuery = em.createQuery("SELECT pv FROM PuntoVendita pv", PuntoVendita.class);
         return getAllPuntiVenditaQuery.getResultList();
     }
