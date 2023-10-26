@@ -1,17 +1,13 @@
 package DAO;
 
-import entities.Biglietto;
 import entities.DocumentoVendita;
-import entities.PuntoVendita;
-import entities.Tessera;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
-import javax.print.Doc;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -37,10 +33,10 @@ public class DocumentoVenditaDAO {
             Object result = query.getSingleResult();
             System.out.println(result);
             if (result != null) {
-                SimpleDateFormat sdformat = new SimpleDateFormat("yyyy-MM-dd");
-                Query query2 = em.createQuery(
-                        "SELECT ts.dataDiScadenza FROM Tessera ts WHERE ts.documentoVenditaId = :idTessera",
-                        LocalDate.class);
+                SimpleDateFormat sdformat = new SimpleDateFormat("dd-MM-yyyy");
+                TypedQuery<LocalDate> query2 = em.createQuery(
+                        "SELECT ts.dataDiScadenza FROM Tessera ts WHERE ts.documentoVenditaId = :idTessera", LocalDate.class
+                );
                 query2.setParameter("idTessera", idTessera);
                 LocalDate result2 = (LocalDate) query2.getSingleResult();
 
@@ -53,11 +49,6 @@ public class DocumentoVenditaDAO {
         } catch (Exception e) {
             System.out.println("Errore nel caricamento dati: " + e.getMessage());
         }
-        LocalDate oggi = LocalDate.now();
-        TypedQuery<DocumentoVendita> query = em.createQuery(
-                "SELECT ts FROM Tessera ts WHERE ts.dataDiScadenza < CURRENT_DATE", DocumentoVendita.class);
-        // query.setParameter("oggi", oggi);
-        query.getResultList().forEach(System.out::println);
     }
 
     public void convalidaBiglietto(UUID id) {
