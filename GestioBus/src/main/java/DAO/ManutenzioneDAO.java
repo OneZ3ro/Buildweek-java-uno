@@ -70,7 +70,7 @@ public class ManutenzioneDAO {
     }
 
     public List<Manutenzione> getAllManutenzioni() {
-        TypedQuery<Manutenzione> getAllManutenzioniQuery = em.createQuery("SELECT m FROM Manutenzione m",
+        TypedQuery<Manutenzione> getAllManutenzioniQuery = em.createQuery("SELECT m FROM Manutenzione m WHERE m.dataFine IS NULL",
                 Manutenzione.class);
         return getAllManutenzioniQuery.getResultList();
     }

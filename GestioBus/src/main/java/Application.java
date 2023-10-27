@@ -82,7 +82,7 @@ public class Application {
                                     System.out.println("Hai scelto manutenzione");
                                     System.out.println("0: Torna indietro\n1: insesci nuava manutenzione su mezzo(per id mezzo)");
                                     System.out.println("2: Cerca manutenzione attive su mezzo(per id mezzo)");
-                                    System.out.println("3: Fine lavori (per id mezzo)");
+                                    System.out.println("3: Fine lavori");
                                     int choiceManu = Integer.parseInt(scanner.nextLine());
                                     switch (choiceManu) {
                                         case 0: {
