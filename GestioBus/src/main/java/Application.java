@@ -39,13 +39,10 @@ public class Application {
         creazioneManutenzione(mtd, mzd, rndm);
         creaControlloTratta(cd, mzd, rndm);
 
-
  */
-
         //mtd.periodiServiziMezzo("915abeca-6ac9-41a8-bef1-a6b5eb1d7863");
 
 
-        pS(mtd, mzd, "1dc7203e-107c-4cc6-9126-bf1accfe5409");
 //        mtd.listaManutenzioneMezzi("0b378bcb-c0cf-4619-8bc6-833c007f9de5").forEach(System.out::println);
 //
 //        mzd.getContaTratte("332f4b16-8230-48f2-90d3-492f6b25859c");
@@ -120,6 +117,7 @@ public class Application {
                                             System.out.println("Insesci id manutenzione");
                                             String s = scanner.nextLine();
                                             mtd.uscitaMezzoManutenzione(s);
+                                            break;
                                         }
                                     }
                                     break;
@@ -127,7 +125,7 @@ public class Application {
                                 case 2: {
                                     System.out.println("Hai scelto Mezzo");
                                     System.out.println("0: Torna indietro\n1: Inserisci nuovo Mezzo\n2: Cerca veicoli in servizio");
-                                    System.out.println("3: Verifica biglietti su Mezzo\n4: Verifica tempi effittivi tratta");
+                                    System.out.println("3: Verifica biglietti su Mezzo\n4: Verifica tempi effittivi tratta\n5: Cerca periodi di manutenzione e servizio");
                                     int choiceAdminMezzo = Integer.parseInt(scanner.nextLine());
                                     switch (choiceAdminMezzo) {
                                         case 0: {
@@ -210,6 +208,12 @@ public class Application {
                                             String s = scanner.nextLine();
                                             cd.getTempiEffettiviMezzo(s);
                                             break;
+                                        }
+                                        case 5: {
+                                            mzd.getAllMezziDiTrasporti().stream().filter(mezzo -> mezzo.getStato().equals(Stato.IN_MANUTENZIONE)).forEach(System.out::println);
+                                            System.out.println("inserisci id mezzo");
+                                            String s = scanner.nextLine();
+                                            pS(mtd, mzd, s);
                                         }
                                     }
                                     break;
@@ -361,7 +365,7 @@ public class Application {
 
     public static String creaRandomData() {
         Random rndm = new Random();
-        int anno = rndm.nextInt(2021, 2024);
+        int anno = rndm.nextInt(2000, 2020);
         int mese = rndm.nextInt(1, 13);
         int giorno = 1;
         if (mese == 2) {
@@ -476,16 +480,20 @@ public class Application {
             MezzoDiTrasporto mezzoDiTrasporto = mzd.getAllMezziDiTrasporti().get(rndm.nextInt(0, mzd.getAllMezziDiTrasporti().size()));
             LocalDate dataInizio = mezzoDiTrasporto.getDataDiImmatricolazione();
 
+            int x = rndm.nextInt(0, 100);
             if (mezzoDiTrasporto.getStato() != Stato.IN_SERVIZIO) {
                 if (!mezzoDiTrasportoList.contains(mezzoDiTrasporto)) {
-                    Manutenzione manutenzione = new Manutenzione(LocalDate.now(), dataInizio.plusDays(rndm.nextInt(101, 201)),
+                    Manutenzione manutenzione = new Manutenzione(dataInizio.plusDays(x),
+                            dataInizio.plusDays(x + rndm.nextInt(101, 201)),
                             mezzoDiTrasporto,
                             app[rndm.nextInt(0, app.length)]);
                     mtd.save(manutenzione);
-
-
                 } else {
-                    Manutenzione manutenzione = new Manutenzione(mtd.getFineData(mezzoDiTrasporto.getMezzoDiTrasportoId()).get(mtd.getFineData(mezzoDiTrasporto.getMezzoDiTrasportoId()).size() - 1).plusDays(rndm.nextInt(30, 101)), mtd.getFineData(mezzoDiTrasporto.getMezzoDiTrasportoId()).get(mtd.getFineData(mezzoDiTrasporto.getMezzoDiTrasportoId()).size() - 1).plusDays(rndm.nextInt(101, 201)), mezzoDiTrasporto, app[rndm.nextInt(0, app.length)]);
+                    Manutenzione manutenzione = new Manutenzione(mtd.getFineData(mezzoDiTrasporto.getMezzoDiTrasportoId())
+                            .get(mtd.getFineData(mezzoDiTrasporto.getMezzoDiTrasportoId()).size() - 1).plusDays(x),
+                            mtd.getFineData(mezzoDiTrasporto.getMezzoDiTrasportoId())
+                                    .get(mtd.getFineData(mezzoDiTrasporto.getMezzoDiTrasportoId()).size() - 1).plusDays(x + rndm.nextInt(101, 201)),
+                            mezzoDiTrasporto, app[rndm.nextInt(0, app.length)]);
                     mtd.save(manutenzione);
                 }
                 mezzoDiTrasportoList.add(mezzoDiTrasporto);
@@ -522,21 +530,20 @@ public class Application {
             date.add(me.getDataFine());
             System.out.println(" data inizio " + me.getDataInizio() + " data fine: " + me.getDataFine() +
                     " in servizio ");
-
         });
         System.out.println("Servizio:");
+        System.out.println(dataImm + "  " + date.get(0));
         for (int i = 1; i < date.size() - 1; i++) {
             if (i % 2 != 0) {
                 System.out.println(date.get(i) + "  " + date.get(i + 1));
             }
             if (i == date.size() - 2) {
-                System.out.println(date.get(date.size() - 1) + "  " + LocalDate.now());
+                if (mz.getById(mezzoId).getStato() == Stato.IN_SERVIZIO) {
+                    System.out.println("oggi in servizio!");
+                    System.out.println(date.get(date.size() - 1) + "  " + LocalDate.now());
+                } else System.out.println("ad oggi in manutenzione");
             }
         }
-        if (mezzo.get(mezzo.size() - 1).getDataFine().isBefore(LocalDate.now())) {
-            System.out.println("oggi in servizio!");
-        } else System.out.println("in manutenzione...");
-
     }
 
 }
