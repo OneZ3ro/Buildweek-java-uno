@@ -160,7 +160,7 @@ public class Application {
                                         case 3: {
                                             mzd.getAllMezziDiTrasporti().forEach(System.out::println);
                                             System.out.println("Verifica biglietti su mezzo per data");
-                                            System.out.println("0: torna indietro\n1: Cerca per data\n2: Cerca per periodo\n3: Totale biglietti su mezzo\n4: Cerca per id biglietto");
+                                            System.out.println("0: torna indietro\n1: Cerca per data\n2: Cerca per periodo\n3: Totale biglietti su mezzo\n");
                                             int scelta = Integer.parseInt(scanner.nextLine());
                                             switch (scelta) {
                                                 case 0: {
@@ -190,12 +190,10 @@ public class Application {
                                                     System.out.println("Insesci id mezzo da elenco soprastante");
                                                     String s = scanner.nextLine();
                                                     dd.totaleBigliettiVidimati(s);
-                                                }
-                                                case 4: {
-                                                    //istruzioni
                                                     break;
                                                 }
                                             }
+                                            break;
                                         }
                                         case 4: {
                                             System.out.println("Verifica tempi effittivi tratta");
@@ -214,6 +212,7 @@ public class Application {
                                             System.out.println("inserisci id mezzo");
                                             String s = scanner.nextLine();
                                             pS(mtd, mzd, s);
+                                            break;
                                         }
                                     }
                                     break;
@@ -291,13 +290,14 @@ public class Application {
                                         Biglietto bg = new Biglietto(LocalDate.now(), pd.getById(s), td.getById2(t).getTrasporti().get(rndm.nextInt(0, td.getById2(t).getTrasporti().size())));
                                         dd.save(bg);
                                     }
+                                    break;
                                 }
                             }
                             break;
                         }
                         case 2: {
                             System.out.println("Hai scelto Utente");
-                            System.out.println("0: Torna indietro\n1:Convalida\n2:Acquisto biglietto\n3:crea abbonamento");
+                            System.out.println("0: Torna indietro\n1:Convalida\n2:Crea abbonamento");
                             int choiceUser = Integer.parseInt(scanner.nextLine());
                             switch (choiceUser) {
                                 case 0: {
@@ -313,10 +313,6 @@ public class Application {
                                     break;
                                 }
                                 case 2: {
-                                    System.out.println("Hai scelto Acquisto biglietto");
-                                    break;
-                                }
-                                case 3: {
                                     System.out.println("Hai scelto crea abbonamento");
                                     pd.getAllPuntiVendita().forEach(System.out::println);
                                     System.out.println("In che punto vendita acquisti? seleziona id da lista soprastante");
