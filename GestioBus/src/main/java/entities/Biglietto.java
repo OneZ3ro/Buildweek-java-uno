@@ -7,6 +7,7 @@ import java.time.LocalDate;
 
 @Entity
 public class Biglietto extends DocumentoVendita {
+    @JoinColumn(name = "data_convalida")
     private LocalDate dataDiConvalidazione;
 
     @ManyToOne
@@ -14,6 +15,10 @@ public class Biglietto extends DocumentoVendita {
     private MezzoDiTrasporto mezzoDiTrasporto;
 
     public Biglietto() {
+    }
+
+    public Biglietto(LocalDate dataDiRilascio, PuntoVendita puntoVendita) {
+        super(dataDiRilascio, puntoVendita);
     }
 
     public Biglietto(LocalDate dataDiRilascio, PuntoVendita puntoVendita, LocalDate dataDiConvalidazione, MezzoDiTrasporto mezzoDiTrasporto) {

@@ -4,13 +4,13 @@ import entities.ControlloTratta;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
+import javax.persistence.TypedQuery;
 import java.util.UUID;
 
 public class ControlloTrattaDAO {
     private final EntityManager em;
 
     public ControlloTrattaDAO(EntityManager em) {
-
         this.em = em;
     }
 
@@ -22,8 +22,22 @@ public class ControlloTrattaDAO {
         System.out.println("Nuova controlloTratta creata correttamente");
     }
 
-    public ControlloTratta getById(UUID id) {
+    public ControlloTratta getById(String cId) {
+        UUID id = UUID.fromString(cId);
         return em.find(ControlloTratta.class, id);
+    }
+
+    public void getTempiEffettiviMezzo(String idMezzo) {
+        UUID idConvertito = UUID.fromString(idMezzo);
+        TypedQuery<ControlloTratta> query = em.createNamedQuery("getTempiEffettivi", ControlloTratta.class);
+        query.setParameter("idMezzo", idConvertito);
+        query.getResultList().forEach(check -> {
+            System.out.println("Partenza: " + check.getMezzoDiTrasporto().getTratta().getPartenza() +
+                    " Arrivo: " + check.getMezzoDiTrasporto().getTratta().getDestinazione() +
+                    " tempo effettivo: " + check.getTempoEffettivo() + " tempo medio: " +
+                    check.getMezzoDiTrasporto().getTratta().getTempoMedio());
+        });
+
     }
 
     public void delete(UUID id) {

@@ -5,16 +5,21 @@ import java.time.LocalDate;
 import java.util.UUID;
 
 @Entity
+@Table(name = "manutenzioni")
 public class Manutenzione {
     @Id
     @GeneratedValue
+    @Column(name = "manut_id")
     private UUID manutenzioneId;
+    @Column(name = "data_inizio")
     private LocalDate dataInizio;
+    @Column(name = "data_fine")
     private LocalDate dataFine;
-    @ManyToOne
-    @JoinColumn(name = "mezzo_di_trasporto_id")
-    private MezzoDiTrasporto mezzoDiTrasporto;
+
     private String descrizione;
+    @ManyToOne
+    @JoinColumn(name = "mezzo_id")
+    private MezzoDiTrasporto mezzoDiTrasporto;
 
     public Manutenzione() {
     }

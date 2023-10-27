@@ -5,6 +5,7 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "controlli_tratte")
+@NamedQueries({@NamedQuery(name = "getTempiEffettivi", query = "SELECT c FROM ControlloTratta c WHERE c.mezzoDiTrasporto=:idMezzo")})
 public class ControlloTratta {
     @Id
     @GeneratedValue
@@ -12,7 +13,7 @@ public class ControlloTratta {
     @ManyToOne
     @JoinColumn(name = "id_mezzo")
     private MezzoDiTrasporto mezzoDiTrasporto;
-
+    @JoinColumn(name = "tempo_effettivo")
     private long tempoEffettivo;
 
     public ControlloTratta() {

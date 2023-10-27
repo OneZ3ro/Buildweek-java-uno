@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Entity
+@Table(name = "tratte")
 public class Tratta {
     @Id
     @GeneratedValue
@@ -12,10 +13,11 @@ public class Tratta {
     private UUID trattaID;
     private String partenza;
     private String destinazione;
+    @Column(name = "tempo_medio")
+    private long tempoMedio;
 
     @OneToMany(mappedBy = "tratta")
     private List<MezzoDiTrasporto> trasporti;
-    private long tempoMedio;
 
 
     public Tratta() {

@@ -33,6 +33,11 @@ public class DocumentoVenditaDAO {
                 " Data di scadenza tessera: " + tessera.getDataDiScadenza() + " Abbonamneto: " + tessera.getTipoAbbonamento()));
     }
 
+    public void getAllBiglietti() {
+        TypedQuery<Biglietto> getAllBigliettoQuery = em.createQuery("SELECT t FROM Biglietto t", Biglietto.class);
+        getAllBigliettoQuery.getResultList().forEach(biglietto -> System.out.println("Bilgietto id: " + biglietto.getDocumentoVenditaId() + " " + biglietto));
+    }
+
     public void controlloAbbonamento(String id) {
         UUID idTessera = UUID.fromString(id);
         try {

@@ -5,16 +5,18 @@ import java.time.LocalDate;
 import java.util.UUID;
 
 @Entity
+@Table(name = "doc_vendita")
 @Inheritance(strategy = InheritanceType.JOINED)
 public abstract class DocumentoVendita {
     @Id
     @GeneratedValue
-    @Column(name = "documento_vendita_id")
+    @Column(name = "doc_vendita_id")
     private UUID documentoVenditaId;
+    @Column(name = "data_ril")
     private LocalDate dataDiRilascio;
 
     @ManyToOne
-    @JoinColumn(name = "punto_vendita_id")
+    @JoinColumn(name = "pv_id")
     private PuntoVendita puntoVendita;
 
     public DocumentoVendita() {

@@ -10,18 +10,22 @@ import java.util.Set;
 import java.util.UUID;
 
 @Entity
+@Table(name = "mezzi")
 public class MezzoDiTrasporto {
     @Id
     @GeneratedValue
-    @Column(name = "mezzo_di_trasporto_id")
+    @Column(name = "mezzo_id")
     private UUID mezzoDiTrasportoId;
+    @Column(name = "tipo_mezzo")
     @Enumerated(EnumType.STRING)
     private TipoDiMezzo tipoDiMezzo;
     private long capienza;
     @Enumerated(EnumType.STRING)
     private Stato stato;
-
+    @Column(name = "conto_tratte")
     private int contoTratte;
+    @Column(name = "data_immatricolazione")
+    private LocalDate dataDiImmatricolazione;
     @ManyToOne
     @JoinColumn(name = "tratta_id")
     private Tratta tratta;
@@ -35,7 +39,6 @@ public class MezzoDiTrasporto {
     @OneToMany(mappedBy = "mezzoDiTrasporto")
     private Set<ControlloTratta> checks;
 
-    private LocalDate dataDiImmatricolazione;
 
     public MezzoDiTrasporto() {
     }

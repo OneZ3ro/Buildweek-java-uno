@@ -6,13 +6,17 @@ import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity
+@Table(name = "tessere")
 public class Tessera extends DocumentoVendita {
     @OneToOne
     @JoinColumn(name = "utente_id")
     private Utente utente;
+    @Column(name = "tipo_abb")
     @Enumerated(EnumType.STRING)
     private TipoAbbonamento tipoAbbonamento;
+    @Column(name = "data_scad")
     private LocalDate dataDiScadenza;
+    @Column(name = "data_rinn")
     private LocalDate dataDiRinnovo;
     private boolean active;
 
@@ -20,7 +24,7 @@ public class Tessera extends DocumentoVendita {
     }
 
     public Tessera(LocalDate dataDiRilascio, PuntoVendita puntoVendita, Utente utente, TipoAbbonamento tipoAbbonamento,
-            LocalDate dataDiRinnovo) {
+                   LocalDate dataDiRinnovo) {
         super(dataDiRilascio, puntoVendita);
         this.utente = utente;
         this.tipoAbbonamento = tipoAbbonamento;
@@ -67,7 +71,7 @@ public class Tessera extends DocumentoVendita {
     @Override
     public String toString() {
         return "Tessera{" +
-        // "utente=" + utente.getNome() +
+                // "utente=" + utente.getNome() +
                 ", tipoAbbonamento=" + tipoAbbonamento +
                 ", dataDiScadenza=" + dataDiScadenza +
                 ", dataDiRinnovo=" + dataDiRinnovo +

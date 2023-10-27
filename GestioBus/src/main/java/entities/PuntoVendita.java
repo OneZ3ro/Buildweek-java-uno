@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Entity
+@Table(name = "punti_vendita")
 @Inheritance(strategy = InheritanceType.JOINED)
 public abstract class PuntoVendita {
     @Id

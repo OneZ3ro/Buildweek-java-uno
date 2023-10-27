@@ -5,8 +5,10 @@ import enums.StatoDistributore;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "distributori")
 public class Distributore extends PuntoVendita {
     @Enumerated(EnumType.STRING)
     private StatoDistributore stato;

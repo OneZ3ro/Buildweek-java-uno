@@ -68,6 +68,7 @@ public class Application {
                             System.out.println("Hai scelto Amministrazione, che servizio?");
                             System.out.println("0: Torna indietro, 1:Manuetenzione, 2:Mezzo 3:Verifica abbonamento");
                             System.out.println("4: Aggiungi rivenditore affiliato, 5: Documenti viaggio da punto vendita");
+                            System.out.println("6: Crea e Affida biglietti a rivenditore 7:Crea abbonamento");
                             int choiceAdmin = Integer.parseInt(scanner.nextLine());
                             switch (choiceAdmin) {
                                 case 0: {
@@ -197,11 +198,17 @@ public class Application {
                                         }
                                         case 4: {
                                             System.out.println("Verifica tempi effittivi tratta");
-
+                                            mzd.getAllMezziDiTrasporti().forEach(mezzo -> {
+                                                System.out.println("id: " + mezzo.getMezzoDiTrasportoId() + " tratta id: " + mezzo.getTratta().getTrattaID()
+                                                        + " " + mezzo.getTratta().getPartenza() + " " + mezzo.getTratta().getDestinazione()
+                                                        + " " + mezzo.getTratta().getTempoMedio());
+                                            });
+                                            System.out.println("Verifica tempi effittivi tratta, seleziona id mezzo per verifica tempi effettivi");
+                                            String s = scanner.nextLine();
+                                            cd.getTempiEffettiviMezzo(s);
                                             break;
                                         }
                                     }
-                                    // ISTRUZIONI DA FARE IN MANUTENZIONE
                                     break;
                                 }
                                 case 3: {
@@ -262,6 +269,20 @@ public class Application {
 
                                     break;
                                 }
+                                case 6: {
+                                    System.out.println("crea biglietto/i");
+                                    pd.getAllPuntiVendita().forEach(System.out::println);
+                                    System.out.println("a che rivenditore vuoi affidare i biglietti");
+                                    System.out.println("inscerisci id");
+                                    String s = scanner.nextLine();
+                                    System.out.println("quanti biglietti per questo rivenditore");
+                                    int j = Integer.parseInt(scanner.nextLine());
+                                    System.out.println("creo " + j + " biglietti per rivendiore " + pd.getById(s).getNome() + " con id: " + pd.getById(s).getPuntoVenditaId());
+                                    for (int i = 0; i < j; i++) {
+                                        Biglietto bg = new Biglietto(LocalDate.now(), pd.getById(s));
+                                        dd.save(bg);
+                                    }
+                                }
                             }
                             break;
                         }
@@ -276,7 +297,11 @@ public class Application {
                                     break;
                                 }
                                 case 1: {
-                                    System.out.println("hai scelto Convalida");
+                                    dd.getAllBiglietti();
+                                    System.out.println("hai scelto Convalida, inserisci id Biglietto");
+                                    String bId = scanner.nextLine();
+                                    UUID id = UUID.fromString(bId);
+                                    dd.convalidaBiglietto(id);
                                     break;
                                 }
                                 case 2: {
@@ -285,6 +310,29 @@ public class Application {
                                 }
                                 case 3: {
                                     System.out.println("hai scelto crea abbonamento");
+                                    System.out.println("crea tessera");
+                                    pd.getAllPuntiVendita().forEach(System.out::println);
+                                    System.out.println("in che punto vendita acquisti? seleziona id da lista soprastante");
+                                    String s = scanner.nextLine();
+                                    System.out.println("che tipo di abbonamento?");
+                                    System.out.println("0: MENSILE, 1:SETTIMANLE");
+                                    int i = Integer.parseInt(scanner.nextLine());
+                                    TipoAbbonamento tipo;
+                                    if (i == 0) {
+                                        tipo = TipoAbbonamento.MENSILE;
+                                    } else {
+                                        tipo = TipoAbbonamento.SETTIMANALE;
+                                    }
+                                    System.out.println("dati utente inserisci nome");
+                                    String nome = scanner.nextLine();
+                                    System.out.println("dati utente inserisci cognome");
+                                    String cognome = scanner.nextLine();
+                                    System.out.println("dati utente inserisci data nascita");
+                                    String dataNascita = scanner.nextLine();
+                                    Utente u = new Utente(nome, cognome, LocalDate.parse(dataNascita));
+                                    Tessera bg = new Tessera(LocalDate.now(), pd.getById(s), u, tipo, LocalDate.now().plusYears(1));
+                                    dd.save(bg);
+                                    System.out.println("tessera emessa, data rinnovo " + LocalDate.now().plusYears(1));
                                     break;
                                 }
                             }
@@ -434,7 +482,7 @@ public class Application {
                             app[rndm.nextInt(0, app.length)]);
                     mtd.save(manutenzione);
                 } else {
-                    Manutenzione manutenzione = new Manutenzione(mtd.getFineData(mezzoDiTrasporto.getMezzoDiTrasportoId()).plusDays(rndm.nextInt(30, 101)), mtd.getFineData(mezzoDiTrasporto.getMezzoDiTrasportoId()).plusDays(rndm.nextInt(101, 201)), mezzoDiTrasporto, app[rndm.nextInt(0, app.length)]);
+                    Manutenzione manutenzione = new Manutenzione(mtd.getFineData(mezzoDiTrasporto.getMezzoDiTrasportoId()).get(0).plusDays(rndm.nextInt(30, 101)), mtd.getFineData(mezzoDiTrasporto.getMezzoDiTrasportoId()).get(0).plusDays(rndm.nextInt(101, 201)), mezzoDiTrasporto, app[rndm.nextInt(0, app.length)]);
                     mtd.save(manutenzione);
                 }
                 mezzoDiTrasportoList.add(mezzoDiTrasporto);

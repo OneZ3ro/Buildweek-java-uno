@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.util.UUID;
 
 @Entity
+@Table(name = "utenti")
 public class Utente {
     @Id
     @GeneratedValue
@@ -13,11 +14,13 @@ public class Utente {
 
     private String nome;
     private String cognome;
+    @Column(name = "data_nascita")
     private LocalDate dataDiNascita;
     @OneToOne(mappedBy = "utente")
     private Tessera tessera;
 
-    public Utente() {}
+    public Utente() {
+    }
 
     public Utente(String nome, String cognome, LocalDate dataDiNascita) {
         this.nome = nome;
