@@ -33,13 +33,15 @@ public class Application {
 
 //        System.out.println("hello world");
 
-        creazioneUtente(ud, faker, rndm);
-        creazioneTratta(td, faker, rndm);
-        creazioneMezzoDiTrasporto(mzd, td, rndm);
-        creazionePuntoVedita(pd, faker, rndm);
-        creazioneDocumentoVendita(dd, ud, mzd, rndm, pd);
-        creazioneManutenzione(mtd, mzd, rndm);
-        creaControlloTratta(cd, mzd, rndm);
+//        creazioneUtente(ud, faker, rndm);
+//        creazioneTratta(td, faker, rndm);
+//        creazioneMezzoDiTrasporto(mzd, td, rndm);
+//        creazionePuntoVedita(pd, faker, rndm);
+//        creazioneDocumentoVendita(dd, ud, mzd, rndm, pd);
+//        creazioneManutenzione(mtd, mzd, rndm);
+//        creaControlloTratta(cd, mzd, rndm);
+        mtd.periodiServiziMezzo("915abeca-6ac9-41a8-bef1-a6b5eb1d7863");
+
 
 //        mtd.listaManutenzioneMezzi("0b378bcb-c0cf-4619-8bc6-833c007f9de5").forEach(System.out::println);
 //
