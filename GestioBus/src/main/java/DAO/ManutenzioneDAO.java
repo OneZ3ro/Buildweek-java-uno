@@ -18,11 +18,21 @@ public class ManutenzioneDAO {
 
     public void periodiServiziMezzo(String idMezzo) {
         UUID idConvertito = UUID.fromString(idMezzo);
-        TypedQuery<LocalDate> query = em.createQuery("SELECT DISTINCT bl.dataDiConvalidazione FROM Biglietto bl " +
-                        "WHERE mezzoDiTrasporto.mezzoDiTrasportoId = :idMezzo and bl.dataDiConvalidazione IS NOT NULL",
-                LocalDate.class);
-        query.setParameter("idMezzo", idConvertito);
-        query.getResultList().forEach(System.out::println);
+//        TypedQuery<LocalDate> giornoIm = em.createQuery("SELECT DISTINCT m.dataDiImmatricolazione FROM  MezzoDiTrasporto " +
+//                        "WHERE mezzoDiTrasporto.mezzoDiTrasportoId = :idMezzo and bl.dataDiConvalidazione IS NOT NULL",
+//                LocalDate.class);
+//        giornoIm.setParameter("idMezzo", idConvertito);
+//        giornoIm.getResultList().forEach(System.out::println);
+
+        TypedQuery<LocalDate> lista = em.createQuery("SELECT MA.dataInizio, MA.dataFine" +
+                " as  Data_inizio_Servizio FROM MezzoDiTrasporto M LEFT JOIN Manutenzione MA " +
+                "ON M.mezzoDiTrasportoId = MA.mezzoDiTrasporto.mezzoDiTrasportoId WHERE " +
+                "M.mezzoDiTrasportoId= :uuid GROUP BY MA.dataInizio, MA.dataFine order by " +
+                "Data_inizio_Servizio ASC ",LocalDate.class);
+        lista.setParameter("uuid", idConvertito);
+
+        lista.getResultList().forEach(System.out::println);
+
     }
 
     public List<Manutenzione> listaManutenzioneMezzi(String mezzoId) {
