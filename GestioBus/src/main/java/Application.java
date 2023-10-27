@@ -25,24 +25,27 @@ public class Application {
         TrattaDAO td = new TrattaDAO(em);
         UtenteDAO ud = new UtenteDAO(em);
         ControlloTrattaDAO cd = new ControlloTrattaDAO(em);
-        //Faker faker = new Faker(new Locale("ITALY"));
         Faker faker = new Faker(Locale.ITALY);
         Random rndm = new Random();
-
 //        dd.bigliettiVidimatiPerPeriodo("2dff96c3-cb0e-446f-904f-dc803143ae30", LocalDate.parse("2023-01-09"), LocalDate.parse("2024-01-09"));
 
 //        System.out.println("hello world");
+/*
+        creazioneUtente(ud, faker, rndm);
+        creazioneTratta(td, faker, rndm);
+        creazioneMezzoDiTrasporto(mzd, td, rndm);
+        creazionePuntoVedita(pd, faker, rndm);
+        creazioneDocumentoVendita(dd, ud, mzd, rndm, pd);
+        creazioneManutenzione(mtd, mzd, rndm);
+        creaControlloTratta(cd, mzd, rndm);
 
-//        creazioneUtente(ud, faker, rndm);
-//        creazioneTratta(td, faker, rndm);
-//        creazioneMezzoDiTrasporto(mzd, td, rndm);
-//        creazionePuntoVedita(pd, faker, rndm);
-//        creazioneDocumentoVendita(dd, ud, mzd, rndm, pd);
-//        creazioneManutenzione(mtd, mzd, rndm);
-//        creaControlloTratta(cd, mzd, rndm);
-        mtd.periodiServiziMezzo("915abeca-6ac9-41a8-bef1-a6b5eb1d7863");
+
+ */
+
+        //mtd.periodiServiziMezzo("915abeca-6ac9-41a8-bef1-a6b5eb1d7863");
 
 
+        pS(mtd, mzd, "1dc7203e-107c-4cc6-9126-bf1accfe5409");
 //        mtd.listaManutenzioneMezzi("0b378bcb-c0cf-4619-8bc6-833c007f9de5").forEach(System.out::println);
 //
 //        mzd.getContaTratte("332f4b16-8230-48f2-90d3-492f6b25859c");
@@ -472,18 +475,22 @@ public class Application {
         for (int i = 0; i < rndm.nextInt(50, 101); i++) {
             MezzoDiTrasporto mezzoDiTrasporto = mzd.getAllMezziDiTrasporti().get(rndm.nextInt(0, mzd.getAllMezziDiTrasporti().size()));
             LocalDate dataInizio = mezzoDiTrasporto.getDataDiImmatricolazione();
+
             if (mezzoDiTrasporto.getStato() != Stato.IN_SERVIZIO) {
                 if (!mezzoDiTrasportoList.contains(mezzoDiTrasporto)) {
-                    Manutenzione manutenzione = new Manutenzione(dataInizio.plusDays(rndm.nextInt(3, 101)), dataInizio.plusDays(rndm.nextInt(101, 201)),
+                    Manutenzione manutenzione = new Manutenzione(LocalDate.now(), dataInizio.plusDays(rndm.nextInt(101, 201)),
                             mezzoDiTrasporto,
                             app[rndm.nextInt(0, app.length)]);
                     mtd.save(manutenzione);
+
+
                 } else {
-                    Manutenzione manutenzione = new Manutenzione(mtd.getFineData(mezzoDiTrasporto.getMezzoDiTrasportoId()).get(0).plusDays(rndm.nextInt(30, 101)), mtd.getFineData(mezzoDiTrasporto.getMezzoDiTrasportoId()).get(0).plusDays(rndm.nextInt(101, 201)), mezzoDiTrasporto, app[rndm.nextInt(0, app.length)]);
+                    Manutenzione manutenzione = new Manutenzione(mtd.getFineData(mezzoDiTrasporto.getMezzoDiTrasportoId()).get(mtd.getFineData(mezzoDiTrasporto.getMezzoDiTrasportoId()).size() - 1).plusDays(rndm.nextInt(30, 101)), mtd.getFineData(mezzoDiTrasporto.getMezzoDiTrasportoId()).get(mtd.getFineData(mezzoDiTrasporto.getMezzoDiTrasportoId()).size() - 1).plusDays(rndm.nextInt(101, 201)), mezzoDiTrasporto, app[rndm.nextInt(0, app.length)]);
                     mtd.save(manutenzione);
                 }
                 mezzoDiTrasportoList.add(mezzoDiTrasporto);
             }
+
         }
     }
 
@@ -496,4 +503,40 @@ public class Application {
             cd.save(ct);
         }
     }
+
+    public static void pS(ManutenzioneDAO md, MezzoTraspDAO mz, String mezzoId) {
+        UUID idConvertito = UUID.fromString(mezzoId);
+        List<Manutenzione> listaManut = md.listaManutenzioneMezzi(mezzoId);
+        LocalDate dataImm = mz.getById(mezzoId).getDataDiImmatricolazione();
+        List<Manutenzione> mezzo = new ArrayList<>();
+        List<LocalDate> date = new ArrayList<>();
+        listaManut.forEach(manutenzione -> {
+            if (manutenzione.getMezzoDiTrasporto().getMezzoDiTrasportoId() == mz.getById(mezzoId).getMezzoDiTrasportoId()) {
+                mezzo.add(manutenzione);
+            }
+        });
+        mezzo.forEach(System.out::println);
+        System.out.println("Immatricolazione: " + dataImm + "\nManutenzioni: ");
+        mezzo.forEach(me -> {
+            date.add(me.getDataInizio());
+            date.add(me.getDataFine());
+            System.out.println(" data inizio " + me.getDataInizio() + " data fine: " + me.getDataFine() +
+                    " in servizio ");
+
+        });
+        System.out.println("Servizio:");
+        for (int i = 1; i < date.size() - 1; i++) {
+            if (i % 2 != 0) {
+                System.out.println(date.get(i) + "  " + date.get(i + 1));
+            }
+            if (i == date.size() - 2) {
+                System.out.println(date.get(date.size() - 1) + "  " + LocalDate.now());
+            }
+        }
+        if (mezzo.get(mezzo.size() - 1).getDataFine().isBefore(LocalDate.now())) {
+            System.out.println("oggi in servizio!");
+        } else System.out.println("in manutenzione...");
+
+    }
+
 }
