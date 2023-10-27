@@ -63,10 +63,9 @@ public class Tratta {
 
     @Override
     public String toString() {
-        return "Tratta{" +
-                "trattaID=" + trattaID +
-                ", partenza='" + partenza + '\'' +
-                ", destinazione='" + destinazione + '\'' +
-                '}';
+        return "Tratta= " +
+                "Id: " + trattaID +
+                ", Partenza: " + partenza +
+                ", Destinazione: " + destinazione;
     }
 }

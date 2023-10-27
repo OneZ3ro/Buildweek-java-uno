@@ -57,6 +57,7 @@ public class MezzoDiTrasporto {
         this.capienza = capienza;
         this.tratta = tratta;
         this.stato = Stato.IN_SERVIZIO;
+        this.dataDiImmatricolazione = LocalDate.now();
     }
 
     public TipoDiMezzo getTipoDiMezzo() {
@@ -118,11 +119,11 @@ public class MezzoDiTrasporto {
 
     @Override
     public String toString() {
-        return "{ mezzoDiTrasportoId=" + mezzoDiTrasportoId +
-                ", tipoDiMezzo=" + tipoDiMezzo +
-                ", capienza=" + capienza +
-                ", stato=" + stato +
-                ", tratta=" + tratta +
-                '}';
+        return "MezzoDiTrasporto= " +
+                "mezzo Id: " + mezzoDiTrasportoId +
+                ", tipo: " + tipoDiMezzo +
+                ", capienza: " + capienza +
+                ", stato: " + stato +
+                ", tratta=" + tratta;
     }
 }

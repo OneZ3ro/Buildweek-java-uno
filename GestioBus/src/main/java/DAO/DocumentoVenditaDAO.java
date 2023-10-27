@@ -34,8 +34,9 @@ public class DocumentoVenditaDAO {
     }
 
     public void getAllBiglietti() {
-        TypedQuery<Biglietto> getAllBigliettoQuery = em.createQuery("SELECT t FROM Biglietto t", Biglietto.class);
-        getAllBigliettoQuery.getResultList().forEach(biglietto -> System.out.println("Bilgietto id: " + biglietto.getDocumentoVenditaId() + " " + biglietto));
+        TypedQuery<Biglietto> getAllBigliettoQuery = em.createQuery("SELECT t FROM Biglietto t WHERE t.dataDiConvalidazione IS NULL", Biglietto.class);
+        getAllBigliettoQuery.getResultList().forEach(biglietto -> System.out.println("Bilgietto= Id: " + biglietto.getDocumentoVenditaId() + "; "
+                + biglietto.getMezzoDiTrasporto().getTratta()));
     }
 
     public void controlloAbbonamento(String id) {
@@ -78,6 +79,17 @@ public class DocumentoVenditaDAO {
             System.out.println(e.getMessage());
         }
     }
+
+    public void convalida(UUID id) {
+        Biglietto b = em.find(Biglietto.class, id);
+        EntityTransaction transaction = em.getTransaction();
+        transaction.begin();
+        b.setDataDiConvalidazione(LocalDate.now());
+        em.merge(b);
+        transaction.commit();
+        System.out.println("Convalidazine avvenuta con successo");
+    }
+
 
     public List<DocumentoVendita> dammiDocumentiVenditaPerDataePv(String idPuntoVendita) {
         UUID idPuntoVenditaS = UUID.fromString(idPuntoVendita);

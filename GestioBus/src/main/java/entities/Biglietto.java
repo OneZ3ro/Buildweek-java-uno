@@ -17,8 +17,10 @@ public class Biglietto extends DocumentoVendita {
     public Biglietto() {
     }
 
-    public Biglietto(LocalDate dataDiRilascio, PuntoVendita puntoVendita) {
+    public Biglietto(LocalDate dataDiRilascio, PuntoVendita puntoVendita, MezzoDiTrasporto mezzoDiTrasporto) {
+
         super(dataDiRilascio, puntoVendita);
+        this.mezzoDiTrasporto = mezzoDiTrasporto;
     }
 
     public Biglietto(LocalDate dataDiRilascio, PuntoVendita puntoVendita, LocalDate dataDiConvalidazione, MezzoDiTrasporto mezzoDiTrasporto) {

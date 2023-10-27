@@ -16,20 +16,15 @@ public class Tessera extends DocumentoVendita {
     private TipoAbbonamento tipoAbbonamento;
     @Column(name = "data_scad")
     private LocalDate dataDiScadenza;
-    @Column(name = "data_rinn")
-    private LocalDate dataDiRinnovo;
-    private boolean active;
 
     public Tessera() {
     }
 
-    public Tessera(LocalDate dataDiRilascio, PuntoVendita puntoVendita, Utente utente, TipoAbbonamento tipoAbbonamento,
-                   LocalDate dataDiRinnovo) {
+    public Tessera(LocalDate dataDiRilascio, PuntoVendita puntoVendita, Utente utente, TipoAbbonamento tipoAbbonamento) {
         super(dataDiRilascio, puntoVendita);
         this.utente = utente;
         this.tipoAbbonamento = tipoAbbonamento;
-        this.dataDiScadenza = dataDiRinnovo.plusYears(1);
-        this.dataDiRinnovo = dataDiRinnovo;
+        this.dataDiScadenza = dataDiRilascio.plusYears(1);
     }
 
     public TipoAbbonamento getTipoAbbonamento() {
@@ -48,22 +43,6 @@ public class Tessera extends DocumentoVendita {
         this.dataDiScadenza = dataDiScadenza;
     }
 
-    public LocalDate getDataDiRinnovo() {
-        return dataDiRinnovo;
-    }
-
-    public void setDataDiRinnovo(LocalDate dataDiRinnovo) {
-        this.dataDiRinnovo = dataDiRinnovo;
-    }
-
-    public boolean isActive() {
-        return active;
-    }
-
-    public void setActive(boolean active) {
-        this.active = active;
-    }
-
     public Utente getUtente() {
         return utente;
     }
@@ -74,7 +53,6 @@ public class Tessera extends DocumentoVendita {
                 // "utente=" + utente.getNome() +
                 ", tipoAbbonamento=" + tipoAbbonamento +
                 ", dataDiScadenza=" + dataDiScadenza +
-                ", dataDiRinnovo=" + dataDiRinnovo +
                 '}';
     }
 }

@@ -35,19 +35,10 @@ public class MezzoTraspDAO {
     }
 
     public void getTransportStatus() {
-        try {
-            TypedQuery<MezzoDiTrasporto> getResultQuery = em.createQuery("SELECT mt.stato FROM MezzoDiTrasporto mt WHERE mt.MezzoDiTrasporto.stato", MezzoDiTrasporto.class);
+        TypedQuery<MezzoDiTrasporto> getResultQuery = em.createQuery("SELECT mt FROM MezzoDiTrasporto mt WHERE mt.stato='IN_SERVIZIO'", MezzoDiTrasporto.class);
+        List<MezzoDiTrasporto> result = getResultQuery.getResultList();
+        result.forEach(System.out::println);
 
-            Object result = getResultQuery.getSingleResult();
-            if (result == null) {
-                System.out.println("Ci dispiace l'id inserito è errato");
-            } else {
-                System.out.println(result);
-            }
-        } catch (Exception e) {
-            System.out.println("There was an error loading data");
-            throw e;
-        }
     }
 //  public  List<MezzoDiTrasporto> listaManutenzioniMezzo(UUID idMezzo) {
 //    try {

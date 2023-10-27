@@ -51,10 +51,9 @@ public abstract class PuntoVendita {
 
     @Override
     public String toString() {
-        return "PuntoVendita{" +
-                "puntoVenditaId=" + puntoVenditaId +
-                ", nome='" + nome + '\'' +
-                ", citta='" + citta + '\'' +
-                '}';
+        return "PV= " +
+                "Id: " + puntoVenditaId +
+                ", nome: " + nome + '\'' +
+                ", citta: " + citta + '\'';
     }
 }
